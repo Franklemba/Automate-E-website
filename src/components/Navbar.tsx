@@ -31,11 +31,19 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <Link
-            to="/demo"
+          <a
+            href="http://41.63.62.101:8002/app"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center h-9 px-4 rounded-lg bg-secondary text-secondary-foreground text-sm font-semibold hover:bg-secondary/80 transition-colors"
           >
             Try Demo
+          </a>
+          <Link
+            to="/game"
+            className="inline-flex items-center h-9 px-4 rounded-lg bg-muted text-foreground text-sm font-semibold hover:bg-muted/80 transition-colors"
+          >
+            Play Game
           </Link>
           <a
             href="https://wa.me/260771493040"
@@ -73,12 +81,21 @@ const Navbar = () => {
                   {l.label}
                 </a>
               ))}
-              <Link
-                to="/demo"
+              <a
+                href="http://41.63.62.101:8002/app"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
                 className="py-2 text-sm font-semibold text-secondary hover:text-secondary/80"
               >
                 Try Demo
+              </a>
+              <Link
+                to="/game"
+                onClick={() => setOpen(false)}
+                className="py-2 text-sm font-semibold text-foreground hover:text-primary"
+              >
+                Play Game
               </Link>
             </div>
           </motion.div>

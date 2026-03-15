@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import iconElectrification from "@/assets/icon-electrification.png";
-import iconWater from "@/assets/icon-water.png";
-import iconEnergy from "@/assets/icon-energy.png";
+import iconElectrification from "@/assets/rea.png";
+import iconWater from "@/assets/nkana_water.png";
+import iconEnergy from "@/assets/nwec.avif";
 
 const clients = [
   {

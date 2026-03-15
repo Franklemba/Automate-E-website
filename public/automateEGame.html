@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>AutomateE – Automation Journey</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@600;700;900&display=swap');
+
+::root {
+  --blue:#1a7bd4; --blue-dark:#0d5ca8; --blue-light:#4fa3e8;
+  --yellow:#f5c518; --yellow-dark:#d4a800;
+  --white:#ffffff; --dark:#07111f; --dark2:#0d2040;
+  --green:#22c55e; --red:#ef4444; --gray:#8899aa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background:var(--dark);color:var(--white)}
+
+/* WELCOME — horizontal rectangular card for touch */
+#welcome{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#07111f 0%,#0d2a50 60%,#07111f 100%);
+  padding:16px;
+  overflow-y:auto;
+}
+.welcome-wrap{ max-width:720px;width:100%; }
+.wcard{
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(79,163,232,.35);
+  border-radius:20px;padding:28px 32px;
+  max-width:720px;width:100%;
+  backdrop-filter:blur(12px);
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 60px rgba(26,123,212,.12);
+  text-align:center;
+}
+.wcard .wform{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px 20px;
+  align-items:start;
+  text-align:left;
+}
+.wcard .wform .fg{margin-bottom:0}
+.wcard .wform .fg.fg-full{grid-column:1 / -1}
+.wcard .wform .btn-wrap{grid-column:1 / -1;margin-top:6px}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
+.logo-bubble{width:40px;height:40px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:var(--dark);box-shadow:0 0 20px rgba(245,197,24,.45)}
+.logo-text{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;color:#fff}
+.logo-text span{color:var(--yellow)}
+.wcard h2{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--blue-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.fg{text-align:left}
+.fg label{display:block;font-size:11px;font-weight:800;color:var(--blue-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.fg input,.fg select{
+  width:100%;padding:12px 14px;
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(79,163,232,.3);
+  border-radius:10px;color:#fff;font-size:14px;font-family:'Nunito',sans-serif;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  min-height:44px;
+}
+.fg input::placeholder{color:rgba(255,255,255,.25)}
+.fg select option{background:#0d2040}
+.fg input:focus,.fg select:focus{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(245,197,24,.18)}
+.btn-start{
+  width:100%;padding:14px 20px;
+  background:linear-gradient(135deg,var(--yellow),var(--yellow-dark));
+  border:none;border-radius:12px;
+  font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;
+  color:var(--dark);cursor:pointer;letter-spacing:1px;
+  box-shadow:0 6px 24px rgba(245,197,24,.35);
+  transition:transform .15s,box-shadow .15s;
+  min-height:48px;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,.5)}
+.btn-start:active{transform:scale(0.98)}
+
+/* Splash: hero only at first; form + footer reveal after click */
+.welcome-wrap .wcard,
+.welcome-wrap .welcome-foot{
+  opacity:0;visibility:hidden;max-height:0;overflow:hidden;
+  transition:opacity .4s ease, visibility .4s, max-height .5s ease;
+}
+.welcome-wrap.splash-done .wcard,
+.welcome-wrap.splash-done .welcome-foot{
+  opacity:1;visibility:visible;max-height:2000px;
+}
+
+/* Welcome hero: switch-style logo + "Click here to automate" (splash) */
+.welcome-hero{
+  text-align:center;margin-bottom:20px;
+  min-height:50vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.welcome-wrap.splash-done .welcome-hero{
+  min-height:0;margin-bottom:20px;
+}
+.automate-switch{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  padding:20px 36px;
+  background:rgba(255,255,255,.06);
+  border:2px solid rgba(79,163,232,.4);
+  border-radius:999px;
+  cursor:pointer;
+  box-shadow:0 0 0 0 rgba(245,197,24,.4);
+  animation:automateGlow 2s ease-in-out infinite;
+  transition:transform .2s, box-shadow .2s;
+}
+.automate-switch:hover{ transform:scale(1.03); }
+@keyframes automateGlow{
+  0%,100%{ box-shadow:0 0 20px rgba(245,197,24,.25),0 0 40px rgba(79,163,232,.15); border-color:rgba(79,163,232,.5); }
+  50%{ box-shadow:0 0 28px rgba(245,197,24,.45),0 0 56px rgba(79,163,232,.25); border-color:var(--yellow); }
+}
+.automate-switch .logo-bubble{ flex-shrink:0; }
+.automate-switch .logo-text{ font-size:22px; }
+.automate-cta{
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;
+  color:var(--blue-light);margin-top:14px;
+  animation:automatePulse 2s ease-in-out infinite;
+}
+.welcome-wrap.splash-done .automate-cta{ display:none; }
+@keyframes automatePulse{ 0%,100%{ opacity:.85 } 50%{ opacity:1 } }
+
+/* Welcome footer: Huawei, ID, ZRA Smart Invoice */
+.welcome-foot{
+  margin-top:28px;padding-top:24px;
+  border-top:1px solid rgba(79,163,232,.25);
+  display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px 40px;
+}
+.welcome-foot-item{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:13px;font-weight:700;color:var(--blue-light);text-align:center;
+  letter-spacing:0.5px;
+}
+.welcome-foot-item img{ height:44px;width:auto;object-fit:contain;display:block; }
+.welcome-foot-item.smart-invoice img{
+  height:48px;background:#fff;padding:6px 10px;border-radius:10px;
+  box-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+
+/* GAME SHELL */
+#game{display:none;position:fixed;inset:0;overflow:hidden}
+
+/* CANVAS */
+#gc{display:block;position:absolute;top:0;left:0;width:100%;height:100%}
+
+/* HUD */
+#hud{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;
+  background:rgba(7,17,31,.9);border-bottom:1px solid rgba(79,163,232,.2);
+  backdrop-filter:blur(10px);gap:10px;flex-wrap:wrap;
+}
+.hud-logo{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;white-space:nowrap}
+.hud-logo span{color:var(--yellow)}
+.hud-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hud-badge{
+  background:rgba(79,163,232,.12);border:1px solid rgba(79,163,232,.25);
+  border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;
+  display:flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.hud-badge .val{color:var(--yellow)}
+.prog-wrap{min-width:90px;max-width:160px}
+.prog-bar{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--yellow));border-radius:3px;transition:width .4s ease}
+
+/* D-PAD */
+#dpad{
+  position:absolute;bottom:20px;right:20px;
+  z-index:10;display:grid;
+  grid-template-areas:". up ." "left . right" ". down .";
+  grid-template-columns:56px 56px 56px;
+  grid-template-rows:56px 56px 56px;
+  gap:4px;
+}
+.dpad-btn{
+  background:rgba(26,123,212,.3);border:2px solid rgba(79,163,232,.45);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;user-select:none;
+  transition:background .1s,transform .1s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.dpad-btn:active,.dpad-btn.pressed{background:rgba(245,197,24,.35);border-color:var(--yellow);transform:scale(.9)}
+#dpad-up{grid-area:up}#dpad-down{grid-area:down}#dpad-left{grid-area:left}#dpad-right{grid-area:right}
+
+/* PANEL */
+#panel{
+  position:absolute;left:0;top:50px;bottom:0;width:200px;z-index:8;
+  background:rgba(7,17,31,.88);border-right:1px solid rgba(79,163,232,.18);
+  backdrop-filter:blur(10px);padding:12px 11px;
+  display:flex;flex-direction:column;gap:10px;overflow-y:auto;
+}
+.psec{background:rgba(255,255,255,.04);border:1px solid rgba(79,163,232,.18);border-radius:11px;padding:11px}
+.psec h4{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue-light);font-weight:800;margin-bottom:7px}
+.org-name{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--yellow);font-weight:700;word-break:break-word;line-height:1.4}
+.stage-name{font-size:11px;color:#aac4e0;margin-top:4px}
+.tool-chip{
+  display:inline-flex;align-items:center;gap:3px;
+  background:rgba(26,123,212,.18);border:1px solid rgba(79,163,232,.28);
+  border-radius:14px;padding:3px 8px;font-size:9px;font-weight:700;
+  color:var(--blue-light);margin:2px;
+}
+.tip-box{font-size:10px;color:#aac4e0;line-height:1.55}
+.tip-box.good{color:#86efac}
+.tip-box.note{color:#fde68a}
+
+/* MINI MAP */
+#minimap{
+  position:absolute;bottom:20px;left:208px;z-index:10;
+  background:rgba(7,17,31,.88);border:1px solid rgba(79,163,232,.3);
+  border-radius:10px;overflow:hidden;
+}
+
+/* WIN */
+#win{
+  display:none;position:fixed;inset:0;z-index:300;
+  align-items:center;justify-content:center;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+}
+#win.show{display:flex}
+.win-card{
+  background:linear-gradient(135deg,#0d2040,#0a3060);
+  border:2px solid rgba(245,197,24,.5);border-radius:24px;
+  padding:40px 32px;max-width:460px;width:92%;text-align:center;
+  box-shadow:0 0 80px rgba(245,197,24,.2),0 30px 80px rgba(0,0,0,.5);
+  position:relative;overflow:hidden;
+}
+.win-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,197,24,.12) 0%,transparent 60%)}
+.star-big{font-size:68px;display:block;margin-bottom:10px;animation:starPop .8s cubic-bezier(.34,1.56,.64,1)}
+@keyframes starPop{from{transform:scale(0) rotate(-180deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.win-card h1{font-family:'Orbitron',sans-serif;font-size:22px;color:var(--yellow);margin-bottom:8px}
+.win-card p{color:#aac4e0;font-size:13px;line-height:1.7;margin-bottom:14px}
+.win-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}
+.wstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px}
+.wval{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--yellow);font-weight:700}
+.wlabel{font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.btn-win{padding:13px 24px;background:linear-gradient(135deg,var(--yellow),var(--yellow-dark));border:none;border-radius:11px;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--dark);cursor:pointer;margin:4px;transition:transform .15s}
+.btn-win:hover{transform:translateY(-2px)}
+.btn-win2{padding:12px 20px;background:transparent;border:1.5px solid rgba(245,197,24,.45);border-radius:11px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:var(--yellow);cursor:pointer;margin:4px;transition:all .15s}
+.btn-win2:hover{background:rgba(245,197,24,.1)}
+
+@keyframes floatUp{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(-160px) rotate(720deg) scale(0.5);opacity:0}}
+.cpic{position:absolute;pointer-events:none;animation:floatUp 2.2s ease forwards}
+
+/* KEYS HINT */
+#keyhint{
+  position:absolute;bottom:20px;left:208px;z-index:10;
+  background:rgba(7,17,31,.75);border:1px solid rgba(79,163,232,.2);
+  border-radius:8px;padding:6px 10px;font-size:10px;color:var(--gray);
+}
+
+/* Powered by Huawei – bottom of game */
+#game-powered-by{
+  position:absolute;bottom:0;left:0;right:0;z-index:9;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:8px 12px;
+  background:rgba(7,17,31,.85);border-top:1px solid rgba(79,163,232,.15);
+  font-size:10px;color:var(--gray);font-weight:600;
+}
+#game-powered-by img{height:20px;width:auto;object-fit:contain;vertical-align:middle}
+
+@media(max-width:640px){
+  #panel{display:none}
+  #keyhint{display:none}
+  #dpad{right:10px;bottom:14px}
+  #game-powered-by{bottom:0;padding:6px 8px;font-size:9px}
+  #game-powered-by img{height:16px}
+}
+@media(max-width:520px){
+  .wcard .wform{grid-template-columns:1fr}
+  .wcard{max-width:100%;padding:20px 16px}
+  .welcome-hero{min-height:40vh;margin-bottom:14px}
+  .welcome-wrap.splash-done .welcome-hero{min-height:0}
+  .automate-switch{padding:14px 24px}
+  .automate-switch .logo-text{font-size:18px}
+  .welcome-foot{flex-direction:column;gap:20px;margin-top:22px;padding-top:20px}
+  .welcome-foot-item{font-size:11px;gap:8px}
+  .welcome-foot-item img{height:36px}
+  .welcome-foot-item.smart-invoice img{height:40px;padding:5px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ WELCOME ══ -->
+<div id="welcome">
+  <div class="welcome-wrap">
+    <div class="welcome-hero">
+      <div class="automate-switch" id="splash-switch" onclick="revealSplashForm()" onkeydown="if(event.key==='Enter'||event.key===' '){ event.preventDefault(); revealSplashForm(); }" role="button" tabindex="0" aria-label="Click to start">
+        <div class="logo-bubble">©</div>
+        <div class="logo-text">Automate<span>E</span></div>
+      </div>
+      <div class="automate-cta">Click here to automate</div>
+    </div>
+    <div class="wcard">
+    <h2>Your Automation Journey</h2>
+
+    <div class="wform">
+    <div class="fg">
+      <label>Salutation</label>
+      <select id="psalutation">
+        <option value="">— Title —</option>
+        <option value="Mr">Mr</option>
+        <option value="Mrs">Mrs</option>
+        <option value="Ms">Ms</option>
+        <option value="Miss">Miss</option>
+        <option value="Dr">Dr</option>
+        <option value="Prof">Prof</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Your Name</label>
+      <input id="pname" type="text" placeholder="e.g. Mulenga Phiri" maxlength="30">
+    </div>
+    <div class="fg">
+      <label>Organisation / Company</label>
+      <input id="porg" type="text" placeholder="e.g. Acme Zambia Ltd" maxlength="40">
+    </div>
+    <div class="fg">
+      <label>Job Title</label>
+      <input id="pjobtitle" type="text" placeholder="e.g. IT Manager" maxlength="80">
+    </div>
+    <div class="fg">
+      <label>Current Automation Level</label>
+      <select id="plevel">
+        <option value="">— Where are you now? —</option>
+        <option value="0">🟥 No Automation — Everything is manual</option>
+        <option value="1">🟧 Basic Digital — Some tools, no integration</option>
+        <option value="2">🟨 Partial — A few systems, mostly disconnected</option>
+        <option value="3">🟩 Intermediate — Some modules connected</option>
+        <option value="4">🟦 Advanced — Mostly automated, optimising</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Industry</label>
+      <select id="pindustry">
+        <option value="">— Select Industry —</option>
+        <option value="Accounting">Accounting</option>
+        <option value="Advertising">Advertising</option>
+        <option value="Aerospace">Aerospace</option>
+        <option value="Agriculture">Agriculture</option>
+        <option value="Airline">Airline</option>
+        <option value="Apparel & Accessories">Apparel &amp; Accessories</option>
+        <option value="Automotive">Automotive</option>
+        <option value="Banking">Banking</option>
+        <option value="Biotechnology">Biotechnology</option>
+        <option value="Broadcasting">Broadcasting</option>
+        <option value="Brokerage">Brokerage</option>
+        <option value="Chemical">Chemical</option>
+        <option value="Computer">Computer</option>
+        <option value="Consulting">Consulting</option>
+        <option value="Consumer Products">Consumer Products</option>
+        <option value="Cosmetics">Cosmetics</option>
+        <option value="Defense">Defense</option>
+        <option value="Department Stores">Department Stores</option>
+        <option value="Education">Education</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Energy">Energy</option>
+        <option value="Entertainment & Leisure">Entertainment &amp; Leisure</option>
+        <option value="Executive Search">Executive Search</option>
+        <option value="Financial Services">Financial Services</option>
+        <option value="Finance & Banking">Finance &amp; Banking</option>
+        <option value="Food, Beverage & Tobacco">Food, Beverage &amp; Tobacco</option>
+        <option value="Grocery">Grocery</option>
+        <option value="Health Care">Health Care</option>
+        <option value="Internet Publishing">Internet Publishing</option>
+        <option value="Investment Banking">Investment Banking</option>
+        <option value="Legal">Legal</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Motion Picture & Video">Motion Picture &amp; Video</option>
+        <option value="Music">Music</option>
+        <option value="Newspaper Publishers">Newspaper Publishers</option>
+        <option value="NGO">NGO</option>
+        <option value="Online Auctions">Online Auctions</option>
+        <option value="Pension Funds">Pension Funds</option>
+        <option value="Pharmaceuticals">Pharmaceuticals</option>
+        <option value="Private Equity">Private Equity</option>
+        <option value="Publishing">Publishing</option>
+        <option value="Real Estate">Real Estate</option>
+        <option value="Retail & Wholesale">Retail &amp; Wholesale</option>
+        <option value="Securities & Commodity Exchanges">Securities &amp; Commodity Exchanges</option>
+        <option value="Service">Service</option>
+        <option value="Soap & Detergent">Soap &amp; Detergent</option>
+        <option value="Software">Software</option>
+        <option value="Sports">Sports</option>
+        <option value="Technology">Technology</option>
+        <option value="Telecommunications">Telecommunications</option>
+        <option value="Television">Television</option>
+        <option value="Transportation">Transportation</option>
+        <option value="Venture Capital">Venture Capital</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Email</label>
+      <input id="pemail" type="email" placeholder="e.g. you@company.com" maxlength="80">
+    </div>
+    <div class="fg">
+      <label>Phone / Mobile</label>
+      <input id="pphone" type="tel" placeholder="e.g. +260 97 123 4567" maxlength="20">
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-start" onclick="startGame()">🤖 BEGIN JOURNEY</button>
+    </div>
+    </div>
+    </div>
+
+    <div class="welcome-foot">
+      <div class="welcome-foot-item">
+        <img src="http://41.63.62.101:8002/files/huawei-seeklogo.png" alt="Huawei" />
+        <span>Powered by Huawei infrastructure</span>
+      </div>
+      <div class="welcome-foot-item">
+        <img src="http://41.63.62.101:8002/files/ID%20LOGO.png" alt="Innovative Dynamics" />
+        <span>Innovative Dynamics</span>
+      </div>
+      <div class="welcome-foot-item smart-invoice">
+        <img src="http://41.63.62.101:8002/files/Screenshot%202026-03-15%20145619.png" alt="ZRA Smart Invoice" />
+        <span>ZRA Smart Invoice certified</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GAME ══ -->
+<div id="game">
+  <div id="hud">
+    <div class="hud-logo">Automate<span>E</span></div>
+    <div class="hud-info">
+      <div class="hud-badge">🏢 <span id="hud-org" class="val">—</span></div>
+      <div class="hud-badge">📍 <span id="hud-stage" class="val">—</span></div>
+      <div class="prog-wrap">
+        <div style="font-size:9px;color:var(--gray);margin-bottom:2px;text-align:right" id="hud-pct">0%</div>
+        <div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="gc"></canvas>
+
+  <!-- Left panel -->
+  <div id="panel">
+    <div class="psec">
+      <h4>🏢 Organisation</h4>
+      <div class="org-name" id="p-org">—</div>
+      <div class="stage-name" id="p-stage">—</div>
+    </div>
+    <div class="psec">
+      <h4>📍 Current Zone</h4>
+      <div class="tip-box" id="p-tip">Guide your robot to AutomateE HQ using arrow keys or the D-Pad!</div>
+    </div>
+    <div class="psec">
+      <h4>🛠️ Tools Unlocked</h4>
+      <div id="p-tools"><span class="tool-chip">🔍 Walk to discover...</span></div>
+    </div>
+    <div class="psec">
+      <h4>📊 Journey Stats</h4>
+      <div style="font-size:10px;color:var(--gray);line-height:1.8" id="p-stats">
+        Steps: 0<br>Zones: 0/6
+      </div>
+    </div>
+  </div>
+
+  <!-- Key hint -->
+  <div id="keyhint">⌨️ Arrow keys to move</div>
+
+  <!-- D-Pad -->
+  <div id="dpad">
+    <div class="dpad-btn" id="dpad-up"    data-dir="up">▲</div>
+    <div class="dpad-btn" id="dpad-left"  data-dir="left">◀</div>
+    <div class="dpad-btn" id="dpad-right" data-dir="right">▶</div>
+    <div class="dpad-btn" id="dpad-down"  data-dir="down">▼</div>
+  </div>
+
+  <!-- Powered by Huawei -->
+  <div id="game-powered-by">
+    <img src="http://41.63.62.101:8002/files/huawei-seeklogo.png" alt="Huawei" />
+    <span>Powered by Huawei</span>
+  </div>
+</div>
+
+<!-- ══ WIN ══ -->
+<div id="win">
+  <div class="win-card" id="win-card">
+    <span class="star-big">⭐</span>
+    <h1>AUTOMATION COMPLETE!</h1>
+    <p id="win-msg">You reached AutomateE HQ!</p>
+    <div class="win-stats" id="win-stats"></div>
+    <div id="win-tools" style="margin:10px 0;font-size:11px"></div>
+    <div id="win-save-status" style="font-size:11px;color:var(--gray);margin-bottom:8px;min-height:18px"></div>
+    <div>
+      <button class="btn-win" onclick="restartGame()">🔄 Play Again</button>
+      <button class="btn-win2" onclick="copyResults()">📤 Share</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  FRAPPE API (Customer + Lead registration)
+// ═══════════════════════════════════════════════
+const FRAPPE = {
+  base: 'http://41.63.62.101:8002',
+  token: '0e801754fb7402f:ad9b04c0d0abf69',
+  /** POST via fetch; body as Blob to avoid Expect:100-continue (417) */
+  async post(resource, data) {
+    const url = this.base + '/api/resource/' + encodeURIComponent(resource);
+    const raw = JSON.stringify(data);
+    const myHeaders = new Headers();
+    myHeaders.append('Authorization', 'Token ' + this.token);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Cookie', 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image=');
+    const body = new Blob([raw], { type: 'application/json' });
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: myHeaders,
+      body: body,
+      redirect: 'follow',
+    });
+    const text = await res.text();
+    let json = {};
+    try { json = JSON.parse(text || '{}'); } catch (_) {}
+    if (res.ok) return json;
+    const errDetail = {
+      status: res.status,
+      statusText: res.statusText,
+      url: res.url,
+      responseBody: text,
+      responseJson: json,
+      requestPayload: data,
+    };
+    console.error('[AutomateE] Lead POST failed:', errDetail);
+    const msg = json.exc_type || json.message || json._server_messages || text || ('HTTP ' + res.status + ' ' + res.statusText);
+    throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+  },
+};
+
+// ═══════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════
+const T = 52; // tile size px
+
+// Map legend: 0=road 1=solid-building 2=zone-tile 3=grass 4=park 5=HQ
+const MAP = [
+  [1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1],
+  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,1,1,1],
+  [1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,5,5,0,1,1,1],
+  [1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,5,5,0,1,1,1],
+  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1],
+  [1,1,0,1,1,0,1,1,0,0,1,1,0,1,2,2,0,1,1,0,1,1,1,0,1,1,0,1,1,1],
+  [1,1,0,1,1,0,1,1,0,0,1,1,0,1,2,2,0,1,1,0,1,1,1,0,0,0,0,1,1,1],
+  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [3,3,0,1,1,0,2,2,0,1,1,1,0,1,1,0,1,1,1,0,2,2,0,1,1,1,0,3,3,3],
+  [3,3,0,1,1,0,2,2,0,1,1,1,0,1,1,0,1,1,1,0,2,2,0,1,1,1,0,3,3,3],
+  [3,3,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
+  [3,3,0,1,1,0,1,1,1,0,2,2,0,1,1,0,2,2,0,1,1,0,1,1,1,0,0,3,3,3],
+  [3,3,0,1,1,0,1,1,1,0,2,2,0,1,1,0,2,2,0,1,1,0,1,1,1,0,0,3,3,3],
+  [3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
+  [3,3,0,1,1,1,0,1,1,0,1,1,0,2,2,0,1,1,0,1,1,0,1,1,1,0,0,3,3,3],
+  [3,3,0,1,1,1,0,1,1,0,1,1,0,2,2,0,1,1,0,1,1,0,1,1,1,0,0,3,3,3],
+  [3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
+  [3,3,3,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,0,1,1,0,3,3,3,3],
+  [3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3],
+  [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+];
+
+const MCOLS = MAP[0].length;
+const MROWS = MAP.length;
+
+// Zones — AutomateE solutions (what we offer)
+const ZONES = [
+  { id:'z0', col:14, row:6,  icon:'👥', label:'HR & Attendance',   color:'#6b7280',
+    tip:'AutomateE HR keeps time, leave and attendance in one place. No more paper timesheets!',
+    tools:['HR Attendance','Leave Management','Payroll Integration','Employee Self-Service'] },
+  { id:'z1', col:6,  row:9,  icon:'📦', label:'Procurement & Inventory', color:'#3b82f6',
+    tip:'Procurement and inventory control — from purchase requests to stock levels in real time.',
+    tools:['Procurement','Purchase Orders','Stock Levels','Reorder Alerts'] },
+  { id:'z2', col:20, row:9,  icon:'🏢', label:'Asset Management',  color:'#8b5cf6',
+    tip:'Track assets, maintenance and depreciation. Know where every asset is.',
+    tools:['Asset Register','Maintenance Schedules','Depreciation','Asset Transfers'] },
+  { id:'z3', col:10, row:12, icon:'💰', label:'Finance',          color:'#f59e0b',
+    tip:'Accounting, invoicing and payments. One system for your whole finance function.',
+    tools:['Invoicing','Accounts Payable','Bank Reconciliation','Financial Reports'] },
+  { id:'z4', col:16, row:12, icon:'🤖', label:'AI & Insights',     color:'#10b981',
+    tip:'Predictive analytics and AI-driven insights. Turn data into decisions.',
+    tools:['Predictive Analytics','Smart Dashboards','AI Insights','Automated Reports'] },
+  { id:'z5', col:13, row:10, icon:'📄', label:'Smart Invoice',    color:'#0ea5e9',
+    tip:'ZRA Smart Invoice certified. E-invoicing and tax compliance made simple.',
+    tools:['Smart Invoice','E-Invoicing','ZRA Compliance','Tax-Ready Invoices'] },
+];
+
+const HQ_COL = 24, HQ_ROW = 2;
+
+// Recommended AutomateE solutions by industry (keys = exact Frappe Industry Type name)
+const IND_TOOLS = {
+  'Finance & Banking':['Finance & Accounting','Bank Reconciliation','Invoicing','Predictive Cash Flow','Compliance Reports'],
+  'Banking':['Finance & Accounting','Bank Reconciliation','Invoicing','Predictive Cash Flow','Compliance Reports'],
+  'Financial Services':['Finance & Accounting','Bank Reconciliation','Invoicing','Predictive Cash Flow','Compliance Reports'],
+  'Energy':['Asset Management','Meter & Billing','Field Service','Procurement','AI Demand Forecasting'],
+  'Real Estate':['Property & Lease Tracking','Client Portal','Finance Module','Procurement','Asset Register'],
+  'NGO':['Grant & Donor Tracking','Field Reporting','HR & Attendance','Procurement','Impact Dashboards'],
+  'Retail & Wholesale':['Inventory & Stock','Procurement','Sales Reports','HR Attendance','AI Reorder Insights'],
+  'Manufacturing':['Inventory & Production','Procurement','Asset Management','Finance','Predictive Maintenance'],
+  'Health Care':['HR & Attendance','Procurement','Asset Register','Finance','Patient Data Insights'],
+  'Education':['Student Records','Fee & Finance','HR Attendance','Procurement','Attendance Analytics'],
+  'Technology':['HR Attendance','Procurement','Inventory','Asset Management','Finance & AI Insights'],
+  'Software':['HR Attendance','Procurement','Inventory','Asset Management','Finance & AI Insights'],
+};
+const IND_TOOLS_DEFAULT = ['HR Attendance','Procurement','Inventory','Asset Management','Finance & AI Insights'];
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let G = {
+  name:'', org:'', level:0, industry:'other', email:'', phone:'',
+  col:3, row:19,     // current tile
+  px:0, py:0,        // smooth pixel pos
+  tpx:0, tpy:0,      // target pixel
+  camX:0, camY:0,
+  keys:{},
+  steps:0,
+  zonesHit:new Set(),
+  won:false,
+  anim:0, lastT:0, moveT:0, MI:130,
+  dir:'down',
+  particles:[],
+  popup:null, popT:0,
+  allTools:[],
+  saveDone:false,    // Customer + Lead saved to Frappe
+};
+
+// ═══════════════════════════════════════════════
+//  CANVAS
+// ═══════════════════════════════════════════════
+const CV = document.getElementById('gc');
+const CX = CV.getContext('2d');
+
+function resize(){
+  CV.width  = CV.offsetWidth  || window.innerWidth;
+  CV.height = CV.offsetHeight || window.innerHeight;
+}
+window.addEventListener('resize', resize);
+
+// ═══════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════
+function rr(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+function colRow2px(c,r){ return { x: c*T+T/2, y: r*T+T/2 }; }
+
+function canWalk(c,r){
+  if(c<0||c>=MCOLS||r<0||r>=MROWS) return false;
+  const t = MAP[r][c];
+  return t===0 || t===2 || t===5; // road, zone or HQ
+}
+
+// ═══════════════════════════════════════════════
+//  START
+// ═══════════════════════════════════════════════
+function startGame(){
+  const sal  = document.getElementById('psalutation').value.trim();
+  const nm   = document.getElementById('pname').value.trim();
+  const org  = document.getElementById('porg').value.trim();
+  const jobTitle = document.getElementById('pjobtitle').value.trim();
+  const lv   = document.getElementById('plevel').value;
+  const ind  = document.getElementById('pindustry').value;
+  const email= document.getElementById('pemail').value.trim();
+  const phone= document.getElementById('pphone').value.trim();
+  if(!nm)  { alert('Please enter your name!'); return; }
+  if(!lv)  { alert('Please select your automation level!'); return; }
+  if(!ind) { alert('Please select your industry!'); return; }
+  if (email && !isValidEmail(email)) { alert('Please enter a valid email address (e.g. you@company.com) or leave it blank.'); return; }
+
+  G.salutation = sal; G.name = nm; G.org = org||'Your Organisation'; G.job_title = jobTitle; G.email = email; G.phone = phone;
+  G.level = parseInt(lv); G.industry = ind;
+  G.steps=0; G.zonesHit=new Set(); G.won=false; G.particles=[]; G.popup=null; G.saveDone=false;
+  G.allTools = IND_TOOLS[ind] || IND_TOOLS_DEFAULT;
+
+  // Start col/row by level  (on road tiles)
+  const SC=[[3,19],[5,17],[8,11],[12,8],[18,5]];
+  [G.col,G.row] = SC[G.level];
+  const p = colRow2px(G.col,G.row);
+  G.px=p.x; G.py=p.y; G.tpx=p.x; G.tpy=p.y;
+  G.camX=0; G.camY=0; G.dir='up';
+
+  document.getElementById('welcome').style.display='none';
+  const gEl = document.getElementById('game');
+  gEl.style.display='block';
+  document.getElementById('hud-org').textContent = G.org;
+  document.getElementById('p-org').textContent   = G.org;
+
+  resize();
+  setupControls();
+  G.lastT=0;
+  requestAnimationFrame(loop);
+}
+
+// ═══════════════════════════════════════════════
+//  CONTROLS
+// ═══════════════════════════════════════════════
+function setupControls(){
+  document.addEventListener('keydown',e=>{
+    G.keys[e.key]=true;
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+  });
+  document.addEventListener('keyup',e=>{ G.keys[e.key]=false; });
+
+  document.querySelectorAll('.dpad-btn').forEach(btn=>{
+    const d=btn.dataset.dir;
+    const on=()=>{G.keys[d]=true; btn.classList.add('pressed');};
+    const off=()=>{G.keys[d]=false; btn.classList.remove('pressed');};
+    btn.addEventListener('touchstart',e=>{e.preventDefault();on();},{passive:false});
+    btn.addEventListener('touchend',  e=>{e.preventDefault();off();},{passive:false});
+    btn.addEventListener('touchcancel',e=>{e.preventDefault();off();},{passive:false});
+    btn.addEventListener('mousedown',on);
+    btn.addEventListener('mouseup',off);
+    btn.addEventListener('mouseleave',off);
+  });
+
+  // Swipe on canvas
+  let sx=0,sy=0;
+  CV.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  CV.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)<12&&Math.abs(dy)<12) return;
+    if(Math.abs(dx)>Math.abs(dy)) step(dx>0?'right':'left');
+    else step(dy>0?'down':'up');
+  },{passive:true});
+}
+
+// ═══════════════════════════════════════════════
+//  MOVEMENT
+// ═══════════════════════════════════════════════
+function step(dir){
+  if(G.won) return;
+  let nc=G.col, nr=G.row;
+  if(dir==='up')    nr--;
+  if(dir==='down')  nr++;
+  if(dir==='left')  nc--;
+  if(dir==='right') nc++;
+  if(!canWalk(nc,nr)) return;
+  G.dir=dir; G.col=nc; G.row=nr;
+  const p=colRow2px(nc,nr);
+  G.tpx=p.x; G.tpy=p.y;
+  G.steps++;
+  checkZone(); checkHQ();
+  updateHUD();
+}
+
+function checkZone(){
+  ZONES.forEach(z=>{
+    if(G.zonesHit.has(z.id)) return;
+    if(Math.abs(G.col-z.col)<=1 && Math.abs(G.row-z.row)<=1){
+      G.zonesHit.add(z.id);
+      G.popup=z; G.popT=240;
+      updatePanel(z);
+      burst(G.px, G.py, z.color, 14);
+    }
+  });
+}
+
+function checkHQ(){
+  if(Math.abs(G.col-HQ_COL)<=1 && Math.abs(G.row-HQ_ROW)<=2 && !G.won){
+    G.won=true;
+    setTimeout(showWin, 700);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  LOOP
+// ═══════════════════════════════════════════════
+function loop(ts){
+  const dt = Math.min(ts-G.lastT, 60); G.lastT=ts;
+  G.anim += dt*0.007;
+
+  // held-key movement
+  G.moveT+=dt;
+  if(G.moveT>=G.MI){
+    G.moveT=0;
+    if     (G.keys['ArrowUp']   ||G.keys['up'])    step('up');
+    else if(G.keys['ArrowDown'] ||G.keys['down'])  step('down');
+    else if(G.keys['ArrowLeft'] ||G.keys['left'])  step('left');
+    else if(G.keys['ArrowRight']||G.keys['right']) step('right');
+  }
+
+  // smooth pixel follow
+  G.px += (G.tpx-G.px)*0.22;
+  G.py += (G.tpy-G.py)*0.22;
+
+  // camera
+  const HUD_H = 50;
+  const PANEL_W = window.innerWidth>640 ? 200 : 0;
+  const targetCX = G.px - (CV.width  - PANEL_W)/2 - PANEL_W;
+  const targetCY = G.py - (CV.height - HUD_H)/2   - HUD_H;
+  G.camX += (targetCX-G.camX)*0.1;
+  G.camY += (targetCY-G.camY)*0.1;
+  G.camX = Math.max(0,Math.min(G.camX, MCOLS*T - CV.width));
+  G.camY = Math.max(0,Math.min(G.camY, MROWS*T - CV.height));
+
+  // particles
+  G.particles = G.particles.filter(p=>{
+    p.life-=dt; p.y-=p.vy*dt/16; p.x+=p.vx*dt/16; p.vy*=0.97; return p.life>0;
+  });
+
+  if(G.popT>0) G.popT--; else if(G.popT===0){G.popup=null;G.popT=-1;}
+
+  render();
+  if(!G.won || G.particles.length) requestAnimationFrame(loop);
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════
+function render(){
+  CX.clearRect(0,0,CV.width,CV.height);
+  CX.save();
+  CX.translate(-G.camX, -G.camY);
+
+  drawMap();
+  drawZones();
+  drawHQBuilding();
+  drawParticles();
+  drawRobot();
+  drawPopup();
+
+  CX.restore();
+}
+
+// ---------- MAP ----------
+function drawMap(){
+  const c0=Math.max(0,Math.floor(G.camX/T));
+  const c1=Math.min(MCOLS, Math.ceil((G.camX+CV.width)/T)+1);
+  const r0=Math.max(0,Math.floor(G.camY/T));
+  const r1=Math.min(MROWS, Math.ceil((G.camY+CV.height)/T)+1);
+
+  for(let r=r0;r<r1;r++){
+    for(let c=c0;c<c1;c++){
+      const t=MAP[r][c];
+      const x=c*T, y=r*T;
+      if(t===1) drawBuilding(x,y,c,r);
+      else if(t===3||t===4) drawGrass(x,y,c,r);
+      else drawRoad(x,y); // 0,2,5 all get road base
+    }
+  }
+}
+
+function drawRoad(x,y){
+  CX.fillStyle='#1a2a3e';
+  CX.fillRect(x,y,T,T);
+  CX.strokeStyle='rgba(255,255,255,0.04)';
+  CX.lineWidth=.5;
+  CX.strokeRect(x+.5,y+.5,T-1,T-1);
+}
+
+function drawGrass(x,y,c,r){
+  // alternating subtle shades
+  const shade=((c+r)%2===0)?'#0b1f0e':'#0d2411';
+  CX.fillStyle=shade;
+  CX.fillRect(x,y,T,T);
+  // dots
+  CX.fillStyle='rgba(34,120,34,0.18)';
+  const seed=(c*17+r*13)%T;
+  CX.fillRect(x+seed%T,y+(seed*3)%T,2,2);
+  CX.fillRect(x+(seed*7)%T,y+(seed*11)%T,1,1);
+}
+
+const BCOLS=[['#112244','#0e1e3a'],['#0e1e3a','#131f40'],['#0f2046','#0d1c38']];
+function drawBuilding(x,y,c,r){
+  const bc=BCOLS[(c*3+r*7)%BCOLS.length];
+  CX.fillStyle=bc[0];
+  CX.fillRect(x,y,T,T);
+  // windows
+  const lit=(val)=>(val%3!==0);
+  for(let wi=0;wi<2;wi++){
+    for(let wj=0;wj<3;wj++){
+      CX.fillStyle=lit(c+r+wi+wj)?'rgba(245,197,24,0.28)':'rgba(26,123,212,0.12)';
+      CX.fillRect(x+5+wi*22,y+5+wj*14,14,9);
+    }
+  }
+  CX.strokeStyle='rgba(0,0,0,0.35)';
+  CX.lineWidth=1;
+  CX.strokeRect(x+.5,y+.5,T-1,T-1);
+}
+
+// ---------- ZONES ----------
+function drawZones(){
+  ZONES.forEach((z,i)=>{
+    const reached=G.zonesHit.has(z.id);
+    const wx=z.col*T, wy=z.row*T;
+    const pulse=Math.sin(G.anim*2.2+i*1.1)*0.25+0.75;
+
+    // Glow
+    CX.save();
+    CX.globalAlpha=reached?0.9:pulse*0.7;
+    const g=CX.createRadialGradient(wx+T,wy+T,4,wx+T,wy+T,T*1.4);
+    g.addColorStop(0,z.color+'99');
+    g.addColorStop(1,'transparent');
+    CX.fillStyle=g;
+    CX.fillRect(wx-T/2,wy-T/2,T*3,T*3);
+    CX.restore();
+
+    // Platform
+    CX.fillStyle=reached?z.color+'cc':z.color+'55';
+    rr(CX,wx+3,wy+3,T*2-6,T*2-6,8);
+    CX.fill();
+    CX.strokeStyle=reached?z.color:z.color+'88';
+    CX.lineWidth=2;
+    rr(CX,wx+3,wy+3,T*2-6,T*2-6,8);
+    CX.stroke();
+
+    // Icon
+    CX.font=`${T*0.52}px serif`;
+    CX.textAlign='center'; CX.textBaseline='middle';
+    CX.fillText(z.icon, wx+T, wy+T*0.82);
+
+    // Label
+    CX.font=`bold 9px Nunito,sans-serif`;
+    CX.fillStyle=reached?'#fff':'rgba(255,255,255,0.85)';
+    CX.fillText(z.label, wx+T, wy+T*1.48);
+
+    // Tick
+    if(reached){
+      CX.font='bold 14px serif';
+      CX.fillStyle='#22c55e';
+      CX.fillText('✓', wx+T*1.72, wy+T*0.38);
+    }
+  });
+}
+
+// ---------- HQ ----------
+function drawHQBuilding(){
+  const x=HQ_COL*T, y=HQ_ROW*T;
+  const pulse=Math.sin(G.anim*1.8)*0.22+0.78;
+
+  // Outer glow
+  CX.save();
+  CX.globalAlpha=pulse;
+  const g=CX.createRadialGradient(x+T,y+T*1.5,6,x+T,y+T*1.5,T*3);
+  g.addColorStop(0,'rgba(245,197,24,0.35)');
+  g.addColorStop(1,'transparent');
+  CX.fillStyle=g;
+  CX.fillRect(x-T,y-T,T*4,T*5);
+  CX.restore();
+
+  const bx=x-T*0.3, by=y, bw=T*2.6, bh=T*3.2;
+
+  // Main body
+  CX.fillStyle='#0c2550';
+  rr(CX,bx,by,bw,bh,12); CX.fill();
+  CX.strokeStyle='rgba(245,197,24,0.75)';
+  CX.lineWidth=2.5;
+  rr(CX,bx,by,bw,bh,12); CX.stroke();
+
+  // Windows
+  for(let wi=0;wi<3;wi++){
+    for(let wj=0;wj<4;wj++){
+      const lit=((wi+wj+Math.floor(G.anim*0.8))%3!==0);
+      CX.fillStyle=lit?'rgba(245,197,24,0.42)':'rgba(79,163,232,0.22)';
+      CX.fillRect(bx+8+wi*((bw-20)/3),by+8+wj*((bh-24)/4),(bw-24)/3,(bh-28)/4);
+    }
+  }
+
+  // Sign band
+  CX.fillStyle='rgba(245,197,24,0.9)';
+  CX.fillRect(bx+6,by+bh-22,bw-12,18);
+  CX.font='bold 9px Orbitron,sans-serif';
+  CX.fillStyle='#07111f';
+  CX.textAlign='center'; CX.textBaseline='middle';
+  CX.fillText('AutomateE HQ', bx+bw/2, by+bh-13);
+
+  // Antenna + flag
+  CX.strokeStyle='#f5c518'; CX.lineWidth=2;
+  CX.beginPath(); CX.moveTo(bx+bw/2,by); CX.lineTo(bx+bw/2,by-24); CX.stroke();
+  CX.fillStyle='#f5c518';
+  CX.fillRect(bx+bw/2,by-24,16,10);
+
+  // Floating label
+  const fl=Math.sin(G.anim*1.8)*3;
+  CX.font='bold 11px Orbitron,sans-serif';
+  CX.fillStyle='#f5c518';
+  CX.textAlign='center'; CX.textBaseline='bottom';
+  CX.fillText('⭐ YOUR DESTINATION', bx+bw/2, by-26+fl);
+}
+
+// ---------- ROBOT ----------
+function drawRobot(){
+  const bob = Math.sin(G.anim*5.5)*2.8;
+  const arm = Math.sin(G.anim*5.5)*0.42;
+  const x = G.px, y = G.py + bob;
+
+  CX.save();
+  CX.translate(x,y);
+
+  // Shadow
+  CX.fillStyle='rgba(0,0,0,0.22)';
+  CX.beginPath();
+  CX.ellipse(0,16,11,4,0,0,Math.PI*2);
+  CX.fill();
+
+  // Body glow
+  CX.save();
+  CX.globalAlpha=0.35;
+  const bg=CX.createRadialGradient(0,0,3,0,0,22);
+  bg.addColorStop(0,'rgba(245,197,24,0.7)');
+  bg.addColorStop(1,'transparent');
+  CX.fillStyle=bg;
+  CX.fillRect(-22,-26,44,44);
+  CX.restore();
+
+  // Legs
+  const ls=Math.sin(G.anim*5.5)*5;
+  CX.fillStyle='#0d5ca8';
+  CX.fillRect(-8+ls,9,6,11); CX.fillRect(2-ls,9,6,11);
+  // Feet
+  CX.fillStyle='#f5c518';
+  CX.fillRect(-9+ls,19,8,4); CX.fillRect(1-ls,19,8,4);
+
+  // Left arm
+  CX.save(); CX.translate(-12,-2); CX.rotate(-arm-0.15);
+  CX.fillStyle='#f5c518'; CX.fillRect(-4,0,5,11);
+  CX.fillStyle='#d4a800'; CX.fillRect(-5,10,7,4);
+  CX.restore();
+  // Right arm
+  CX.save(); CX.translate(12,-2); CX.rotate(arm+0.15);
+  CX.fillStyle='#f5c518'; CX.fillRect(-1,0,5,11);
+  CX.fillStyle='#d4a800'; CX.fillRect(-1,10,7,4);
+  CX.restore();
+
+  // Body
+  CX.fillStyle='#f5c518';
+  rr(CX,-11,-9,22,20,5); CX.fill();
+  CX.fillStyle='#d4a800'; CX.fillRect(-11,1,22,2);
+  // Chest orb
+  CX.beginPath(); CX.arc(0,-1,5,0,Math.PI*2); CX.fillStyle='#1a7bd4'; CX.fill();
+  const orb=Math.sin(G.anim*4)*0.5+0.5;
+  CX.beginPath(); CX.arc(0,-1,3,0,Math.PI*2); CX.fillStyle=`rgba(79,163,232,${0.5+orb*0.5})`; CX.fill();
+
+  // Head
+  CX.fillStyle='#f5c518';
+  rr(CX,-10,-24,20,17,6); CX.fill();
+  // Visor
+  CX.fillStyle='rgba(26,123,212,0.88)';
+  rr(CX,-8,-22,16,9,3); CX.fill();
+  // Eyes
+  const ex = G.dir==='left'?-2 : G.dir==='right'?2 : 0;
+  CX.fillStyle='#7dd3fc';
+  CX.beginPath(); CX.arc(-3+ex,-18,2.2,0,Math.PI*2); CX.fill();
+  CX.beginPath(); CX.arc( 3+ex,-18,2.2,0,Math.PI*2); CX.fill();
+  CX.fillStyle='#fff';
+  CX.beginPath(); CX.arc(-3+ex,-18,1,0,Math.PI*2); CX.fill();
+  CX.beginPath(); CX.arc( 3+ex,-18,1,0,Math.PI*2); CX.fill();
+
+  // Antenna
+  CX.strokeStyle='#f5c518'; CX.lineWidth=1.5;
+  CX.beginPath(); CX.moveTo(0,-24); CX.lineTo(0,-33); CX.stroke();
+  const ap=Math.sin(G.anim*5)*0.4+0.6;
+  CX.fillStyle=`rgba(245,197,24,${ap})`;
+  CX.beginPath(); CX.arc(0,-34,3,0,Math.PI*2); CX.fill();
+
+  // ORG NAME TAG above robot
+  CX.font='bold 10px Nunito,sans-serif';
+  CX.textAlign='center'; CX.textBaseline='bottom';
+  const tw = CX.measureText(G.org).width+10;
+  CX.fillStyle='rgba(10,22,45,0.9)';
+  rr(CX,-tw/2,-48,tw,14,4); CX.fill();
+  CX.strokeStyle='rgba(245,197,24,0.5)'; CX.lineWidth=1;
+  rr(CX,-tw/2,-48,tw,14,4); CX.stroke();
+  CX.fillStyle='#f5c518';
+  CX.fillText(G.org,0,-36);
+
+  CX.restore();
+}
+
+// ---------- PARTICLES ----------
+const PEMOJIS=['✨','⭐','💡','🚀','🎉','⚡'];
+function burst(px,py,color,n){
+  for(let i=0;i<n;i++){
+    G.particles.push({
+      x:px,y:py,vx:(Math.random()-.5)*5,vy:Math.random()*-6-1,
+      life:55+Math.random()*45, maxLife:100, color,
+      emoji:PEMOJIS[Math.floor(Math.random()*PEMOJIS.length)],
+      size:13+Math.random()*11,
+    });
+  }
+}
+
+function drawParticles(){
+  G.particles.forEach(p=>{
+    CX.save(); CX.globalAlpha=p.life/p.maxLife;
+    CX.font=`${p.size}px serif`;
+    CX.textAlign='center'; CX.textBaseline='middle';
+    CX.fillText(p.emoji,p.x,p.y);
+    CX.restore();
+  });
+}
+
+// ---------- ZONE POPUP ----------
+function drawPopup(){
+  if(!G.popup||G.popT<=0) return;
+  const z=G.popup;
+  const alpha=Math.min(1,G.popT/25);
+  const px=G.px, py=G.py;
+  const w=190, h=70, ox=px-w/2, oy=py-100;
+
+  CX.save(); CX.globalAlpha=alpha;
+  CX.fillStyle='rgba(10,28,55,0.96)';
+  rr(CX,ox,oy,w,h,10); CX.fill();
+  CX.strokeStyle=z.color; CX.lineWidth=2;
+  rr(CX,ox,oy,w,h,10); CX.stroke();
+
+  CX.textAlign='center'; CX.textBaseline='top';
+  CX.font=`bold 12px Orbitron,sans-serif`;
+  CX.fillStyle=z.color;
+  CX.fillText(`${z.icon} ${z.label}`, px, oy+10);
+  CX.font='10px Nunito,sans-serif';
+  CX.fillStyle='#aac4e0';
+  wrapText(px, oy+30, w-14, z.tip);
+
+  CX.restore();
+}
+
+function wrapText(cx,y,maxW,text){
+  const words=text.split(' ');
+  let line='', lines=[];
+  for(let w of words){
+    const t=line+w+' ';
+    if(CX.measureText(t).width>maxW&&line){lines.push(line.trim());line=w+' ';}
+    else line=t;
+  }
+  lines.push(line.trim());
+  lines.slice(0,2).forEach((l,i)=>CX.fillText(l,cx,y+i*14));
+}
+
+// ═══════════════════════════════════════════════
+//  HUD / PANEL UPDATE
+// ═══════════════════════════════════════════════
+function updateHUD(){
+  const dist=Math.abs(G.col-HQ_COL)+Math.abs(G.row-HQ_ROW);
+  const maxD=MCOLS+MROWS;
+  const pct=Math.round(Math.max(0,Math.min(100,100-(dist/maxD)*100)));
+
+  let stage='📋 Manual Operations';
+  if(pct>18) stage='💻 Going Digital';
+  if(pct>36) stage='🔗 Connecting Systems';
+  if(pct>54) stage='🚀 Workflow Automation';
+  if(pct>72) stage='📊 Intelligent Operations';
+  if(pct>=94) stage='⭐ Full Automation!';
+
+  document.getElementById('hud-stage').textContent=stage;
+  document.getElementById('hud-pct').textContent=pct+'%';
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('p-stage').textContent=stage;
+  document.getElementById('p-stats').innerHTML=`Steps: ${G.steps}<br>Zones: ${G.zonesHit.size}/${ZONES.length}`;
+}
+
+function updatePanel(z){
+  document.getElementById('p-tip').className='tip-box good';
+  document.getElementById('p-tip').textContent=z.tip;
+  const all=[...z.tools,...G.allTools.slice(0,2)];
+  document.getElementById('p-tools').innerHTML=
+    [...new Set(all)].slice(0,5).map(t=>`<span class="tool-chip">⚙️ ${t}</span>`).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  EMAIL VALIDATION (avoid Frappe InvalidEmailAddressError)
+// ═══════════════════════════════════════════════
+function isValidEmail(str) {
+  if (!str || typeof str !== 'string') return false;
+  const s = str.trim();
+  if (!s) return false;
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(s) && s.length <= 140;
+}
+
+// ═══════════════════════════════════════════════
+//  SAVE TO FRAPPE (Customer + Lead)
+// ═══════════════════════════════════════════════
+async function saveToFrappe() {
+  const needsParts = [];
+  ZONES.forEach(z => {
+    if (G.zonesHit.has(z.id)) needsParts.push(z.label + ': ' + (z.tools || []).slice(0, 2).join(', '));
+  });
+  needsParts.push('Recommended: ' + (G.allTools || []).slice(0, 4).join('; '));
+  const customNeeds = needsParts.join(' | ') || 'Completed AutomateE game — interested in solutions.';
+
+  const nameParts = (G.name || 'Player').trim().split(/\s+/);
+  const firstName = nameParts[0] || 'Game';
+  const lastName = nameParts.slice(1).join(' ') || 'Player';
+  const leadName = (G.name || firstName + ' ' + lastName).trim();
+  const companyName = (G.org || '').trim() || 'Game Player';
+  const email = (G.email || '').trim();
+  const phone = (G.phone || '').trim();
+  const emailValid = email && isValidEmail(email);
+
+  const leadData = {
+    salutation: G.salutation || '',
+    first_name: firstName,
+    last_name: lastName,
+    lead_name: leadName,
+    job_title: (G.job_title || '').trim(),
+    gender: '',
+    source: 'ICTAZ',
+    status: 'Lead',
+    type: 'Client',
+    request_type: '',
+    custom_customer_needs: customNeeds,
+    company_name: companyName,
+    industry: G.industry || '',
+    market_segment: '',
+    territory: '',
+    city: '',
+    state: '',
+    country: '',
+    qualification_status: 'Unqualified',
+  };
+  if (emailValid) leadData.email_id = email;
+  if (phone) { leadData.mobile_no = phone; leadData.phone = phone; }
+
+  try {
+    await FRAPPE.post('Lead', leadData);
+    return true;
+  } catch (e) {
+    console.warn('[AutomateE] Lead save:', e);
+    return false;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  WIN
+// ═══════════════════════════════════════════════
+function showWin(){
+  for(let i=0;i<8;i++) setTimeout(()=>burst(G.px,G.py,'#f5c518',6),i*90);
+  requestAnimationFrame(loop);
+
+  document.getElementById('win-msg').textContent=
+    `Amazing, ${G.name}! You guided ${G.org} to AutomateE HQ — ${G.zonesHit.size}/${ZONES.length} solution zones unlocked in just ${G.steps} steps. We'll match you with the right AutomateE solutions!`;
+
+  document.getElementById('win-stats').innerHTML=`
+    <div class="wstat"><div class="wval">${G.steps}</div><div class="wlabel">Steps</div></div>
+    <div class="wstat"><div class="wval">${G.zonesHit.size}/${ZONES.length}</div><div class="wlabel">Zones</div></div>
+    <div class="wstat"><div class="wval">${G.level}</div><div class="wlabel">Start Level</div></div>
+    <div class="wstat"><div class="wval">100%</div><div class="wlabel">Complete</div></div>
+  `;
+
+  document.getElementById('win-tools').innerHTML=
+    `<div style="font-size:10px;color:#aac4e0;margin-bottom:7px;text-transform:uppercase;letter-spacing:1px;font-weight:800">AutomateE solutions for ${G.org}</div>`+
+    G.allTools.slice(0,4).map(t=>`<span class="tool-chip">🛠️ ${t}</span>`).join('');
+
+  const winEl = document.getElementById('win');
+  const btnAgain = document.querySelector('.btn-win');
+  const saveStatus = document.getElementById('win-save-status');
+  winEl.classList.add('show');
+  confettiPop();
+
+  if (saveStatus) saveStatus.textContent = 'Saving your progress…';
+  if (btnAgain) btnAgain.disabled = false;
+  saveToFrappe().then(ok => {
+    G.saveDone = true;
+    if (saveStatus) saveStatus.textContent = ok ? 'Saved — we\'ll be in touch!' : 'Saved locally.';
+  }).catch((e) => {
+    console.error('[AutomateE] saveToFrappe error:', e.message, e);
+    if (saveStatus) saveStatus.textContent = 'Save failed — see console (F12) for details.';
+  });
+}
+
+function confettiPop(){
+  const card=document.getElementById('win-card');
+  const emjis=['🎉','⭐','🚀','💡','🎊','✨','🏆','💫','⚡'];
+  for(let i=0;i<24;i++){
+    setTimeout(()=>{
+      const p=document.createElement('div');
+      p.className='cpic';
+      p.textContent=emjis[Math.floor(Math.random()*emjis.length)];
+      p.style.cssText=`left:${Math.random()*88}%;bottom:10px;font-size:${14+Math.random()*18}px;animation-duration:${1.2+Math.random()*1.6}s`;
+      card.appendChild(p);
+      setTimeout(()=>p.remove(),3000);
+    },i*100);
+  }
+}
+
+function revealSplashForm(){
+  const wrap = document.querySelector('.welcome-wrap');
+  if (wrap && !wrap.classList.contains('splash-done')) wrap.classList.add('splash-done');
+}
+
+function restartGame(){
+  location.reload();
+}
+
+function copyResults(){
+  const t=`🤖 AutomateE Automation Journey\n\n👤 ${G.name} — ${G.org}\n📊 ${G.zonesHit.size}/${ZONES.length} zones unlocked | ${G.steps} steps\n⭐ REACHED FULL AUTOMATION HQ!\n\nPowered by AutomateE — Innovative Dynamics Limited`;
+  navigator.clipboard?.writeText(t).then(()=>alert('Copied to clipboard!')).catch(()=>alert(t));
+}
+</script>
+</body>
+</html>
+
