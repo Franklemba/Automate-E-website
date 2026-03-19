@@ -131,11 +131,44 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 /* PANEL */
 #panel{
-  position:absolute;left:0;top:50px;bottom:0;width:200px;z-index:8;
-  background:rgba(7,17,31,.88);border-right:1px solid rgba(79,163,232,.18);
-  backdrop-filter:blur(10px);padding:12px 11px;
+  position:absolute;left:-200px;top:50px;bottom:0;width:200px;z-index:8;
+  background:rgba(7,17,31,.92);border-right:1px solid rgba(79,163,232,.25);
+  backdrop-filter:blur(10px);padding:12px 11px 12px 11px;
   display:flex;flex-direction:column;gap:10px;overflow-y:auto;
+  transition:left .35s cubic-bezier(.4,0,.2,1);
 }
+#panel.panel-open{left:0;}
+
+/* Persistent open-panel button — fixed to left screen edge */
+#panel-open-btn{
+  position:fixed;left:0;top:50%;transform:translateY(-50%);
+  width:32px;height:80px;z-index:20;
+  background:rgba(13,32,64,.95);border:1px solid rgba(79,163,232,.4);
+  border-left:none;border-radius:0 12px 12px 0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  cursor:pointer;transition:background .2s,border-color .2s,opacity .25s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+#panel-open-btn:hover{background:rgba(26,123,212,.35);border-color:var(--yellow);}
+#panel-open-btn .opb-icon{font-size:16px;line-height:1;}
+#panel-open-btn .opb-arrow{font-size:12px;color:var(--blue-light);}
+#panel-open-btn.hidden{opacity:0;pointer-events:none;}
+@keyframes tabPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,197,24,0)}50%{box-shadow:0 0 0 6px rgba(245,197,24,.5)}}
+#panel-open-btn.notify{animation:tabPulse .65s ease 4;border-color:var(--yellow);}
+
+/* Collapse button at top of panel */
+#panel-close-btn{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(26,123,212,.14);border:1px solid rgba(79,163,232,.3);
+  border-radius:9px;padding:8px 11px;cursor:pointer;
+  font-size:11px;font-weight:800;color:var(--blue-light);
+  letter-spacing:.5px;transition:background .2s,border-color .2s,color .2s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;
+}
+#panel-close-btn:hover{background:rgba(26,123,212,.28);border-color:var(--yellow);color:var(--yellow);}
+#panel-close-btn .pcb-label{display:flex;align-items:center;gap:6px;}
+#panel-close-btn .pcb-arrow{font-size:14px;}
 .psec{background:rgba(255,255,255,.04);border:1px solid rgba(79,163,232,.18);border-radius:11px;padding:11px}
 .psec h4{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue-light);font-weight:800;margin-bottom:7px}
 .org-name{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--yellow);font-weight:700;word-break:break-word;line-height:1.4}
@@ -147,11 +180,25 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 /* MINI MAP */
 #minimap{
-  position:absolute;bottom:56px;left:208px;z-index:10;
+  position:absolute;bottom:56px;left:36px;z-index:10;
   background:rgba(7,17,31,.92);border:1px solid rgba(79,163,232,.4);
   border-radius:10px;overflow:hidden;padding:4px;
+  transition:left .35s cubic-bezier(.4,0,.2,1), border-color .15s, box-shadow .15s;
+  user-select:none;-webkit-user-select:none;
 }
-#minimap-title{font-size:8px;color:var(--blue-light);font-weight:800;text-transform:uppercase;letter-spacing:1px;text-align:center;padding:0 2px 3px;}
+#minimap.panel-open{left:208px;}
+#minimap.mm-free{transition:border-color .15s, box-shadow .15s;} /* no positional transition once user drags it */
+#minimap-title{
+  font-size:8px;color:var(--blue-light);font-weight:800;text-transform:uppercase;
+  letter-spacing:1px;text-align:center;padding:0 2px 3px;
+  cursor:grab;display:flex;align-items:center;justify-content:center;gap:5px;
+}
+#minimap-title::before{content:'⠿';font-size:11px;opacity:.5;letter-spacing:0}
+#minimap.mm-dragging{
+  cursor:grabbing;border-color:var(--yellow);
+  box-shadow:0 6px 28px rgba(245,197,24,.3);
+  transition:border-color .15s, box-shadow .15s;
+}
 
 /* WIN */
 #win{display:none;position:fixed;inset:0;z-index:300;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);}
@@ -177,10 +224,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 /* KEYS HINT */
 #keyhint{
-  position:absolute;bottom:20px;left:208px;z-index:10;
+  position:absolute;bottom:20px;left:36px;z-index:10;
   background:rgba(7,17,31,.75);border:1px solid rgba(79,163,232,.2);
   border-radius:8px;padding:6px 10px;font-size:10px;color:var(--gray);
+  transition:left .35s cubic-bezier(.4,0,.2,1);
 }
+#keyhint.panel-open{left:208px;}
 
 /* Powered by Huawei */
 #game-powered-by{
@@ -194,8 +243,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 @media(max-width:640px){
   #panel{display:none}
+  #panel-open-btn{display:none}
+  #panel-close-btn{display:none}
   #keyhint{display:none}
   #minimap{left:8px;bottom:56px;}
+  #minimap.panel-open{left:8px;}
   #dpad{right:10px;bottom:14px}
   #game-powered-by{padding:8px 10px;font-size:10px;flex-wrap:wrap;justify-content:center;gap:6px}
   #game-powered-by span{color:#fff !important;}
@@ -348,8 +400,19 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
   <canvas id="gc"></canvas>
 
+  <!-- Open panel button — visible on left edge when panel is closed -->
+  <div id="panel-open-btn" onclick="openPanel()" title="Show info panel">
+    <span class="opb-icon">📋</span>
+    <span class="opb-arrow">▶</span>
+  </div>
+
   <!-- Left panel -->
   <div id="panel">
+    <!-- Collapse button pinned at top of panel -->
+    <div id="panel-close-btn" onclick="closePanel()" title="Hide panel">
+      <span class="pcb-label">📋 Info Panel</span>
+      <span class="pcb-arrow">✕</span>
+    </div>
     <div class="psec">
       <h4>🏢 Organisation</h4>
       <div class="org-name" id="p-org">—</div>
@@ -1403,6 +1466,39 @@ function updatePanel(z) {
   const all = [...z.tools, ...G.allTools.slice(0, 2)];
   document.getElementById('p-tools').innerHTML =
     [...new Set(all)].slice(0, 5).map(t => `<span class="tool-chip">⚙️ ${t}</span>`).join('');
+  expandPanel(); // auto-open when robot reaches a module
+}
+
+// ═══════════════════════════════════════════════
+//  PANEL OPEN / CLOSE
+// ═══════════════════════════════════════════════
+function expandPanel() {
+  openPanel();
+  // pulse the open button to draw attention (briefly, then it hides)
+  const btn = document.getElementById('panel-open-btn');
+  if (btn) { btn.classList.remove('notify'); void btn.offsetWidth; btn.classList.add('notify'); }
+}
+
+function openPanel() {
+  const panel = document.getElementById('panel');
+  const mm    = document.getElementById('minimap');
+  const kh    = document.getElementById('keyhint');
+  const btn   = document.getElementById('panel-open-btn');
+  panel.classList.add('panel-open');
+  mm && mm.classList.add('panel-open');
+  kh && kh.classList.add('panel-open');
+  btn && btn.classList.add('hidden');
+}
+
+function closePanel() {
+  const panel = document.getElementById('panel');
+  const mm    = document.getElementById('minimap');
+  const kh    = document.getElementById('keyhint');
+  const btn   = document.getElementById('panel-open-btn');
+  panel.classList.remove('panel-open');
+  mm && mm.classList.remove('panel-open');
+  kh && kh.classList.remove('panel-open');
+  btn && btn.classList.remove('hidden');
 }
 
 // ═══════════════════════════════════════════════
@@ -1522,6 +1618,67 @@ function revealSplashForm() {
   const wrap = document.querySelector('.welcome-wrap');
   if (wrap && !wrap.classList.contains('splash-done')) wrap.classList.add('splash-done');
 }
+
+
+// ═══════════════════════════════════════════════
+//  MINIMAP DRAG
+// ═══════════════════════════════════════════════
+(function(){
+  const mm = document.getElementById('minimap');
+  const title = document.getElementById('minimap-title');
+  if (!mm || !title) return;
+
+  let dragging = false, startX = 0, startY = 0, origLeft = 0, origTop = 0;
+
+  function getPos(e) {
+    return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+                     : { x: e.clientX, y: e.clientY };
+  }
+
+  function startDrag(e) {
+    // Capture current rendered position and switch to absolute top/left
+    const rect = mm.getBoundingClientRect();
+    const gameRect = document.getElementById('game').getBoundingClientRect();
+    mm.style.left   = (rect.left - gameRect.left) + 'px';
+    mm.style.top    = (rect.top  - gameRect.top)  + 'px';
+    mm.style.bottom = 'auto';
+    mm.style.right  = 'auto';
+    mm.classList.add('mm-free', 'mm-dragging');
+    mm.classList.remove('panel-open'); // user controls position now
+
+    const pos = getPos(e);
+    startX = pos.x; startY = pos.y;
+    origLeft = parseFloat(mm.style.left);
+    origTop  = parseFloat(mm.style.top);
+    dragging = true;
+    e.preventDefault();
+  }
+
+  function onMove(e) {
+    if (!dragging) return;
+    const pos = getPos(e);
+    const dx = pos.x - startX, dy = pos.y - startY;
+    const game = document.getElementById('game');
+    const maxL = game.clientWidth  - mm.offsetWidth;
+    const maxT = game.clientHeight - mm.offsetHeight;
+    mm.style.left = Math.max(0, Math.min(maxL, origLeft + dx)) + 'px';
+    mm.style.top  = Math.max(0, Math.min(maxT, origTop  + dy)) + 'px';
+    e.preventDefault();
+  }
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    mm.classList.remove('mm-dragging');
+  }
+
+  title.addEventListener('mousedown',  startDrag, { passive: false });
+  title.addEventListener('touchstart', startDrag, { passive: false });
+  window.addEventListener('mousemove', onMove,    { passive: false });
+  window.addEventListener('touchmove', onMove,    { passive: false });
+  window.addEventListener('mouseup',   endDrag);
+  window.addEventListener('touchend',  endDrag);
+})();
 
 function restartGame() { location.reload(); }
 
