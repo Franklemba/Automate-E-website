@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@600;700;900&display=swap');
 
-::root {
+:root {
   --blue:#1a7bd4; --blue-dark:#0d5ca8; --blue-light:#4fa3e8;
   --yellow:#f5c518; --yellow-dark:#d4a800;
   --white:#ffffff; --dark:#07111f; --dark2:#0d2040;
@@ -16,30 +16,22 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background:var(--dark);color:var(--white)}
 
-/* WELCOME — horizontal rectangular card for touch */
+/* WELCOME */
 #welcome{
   position:fixed;inset:0;z-index:200;
   display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,#07111f 0%,#0d2a50 60%,#07111f 100%);
-  padding:16px;
-  overflow-y:auto;
+  padding:16px;overflow-y:auto;
 }
 .welcome-wrap{ max-width:720px;width:100%; }
 .wcard{
   background:rgba(255,255,255,.04);border:1.5px solid rgba(79,163,232,.35);
-  border-radius:20px;padding:28px 32px;
-  max-width:720px;width:100%;
+  border-radius:20px;padding:28px 32px;max-width:720px;width:100%;
   backdrop-filter:blur(12px);
   box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 60px rgba(26,123,212,.12);
   text-align:center;
 }
-.wcard .wform{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px 20px;
-  align-items:start;
-  text-align:left;
-}
+.wcard .wform{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;align-items:start;text-align:left;}
 .wcard .wform .fg{margin-bottom:0}
 .wcard .wform .fg.fg-full{grid-column:1 / -1}
 .wcard .wform .btn-wrap{grid-column:1 / -1;margin-top:6px}
@@ -54,8 +46,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   width:100%;padding:12px 14px;
   background:rgba(255,255,255,.07);border:1.5px solid rgba(79,163,232,.3);
   border-radius:10px;color:#fff;font-size:14px;font-family:'Nunito',sans-serif;outline:none;
-  transition:border-color .2s,box-shadow .2s;
-  min-height:44px;
+  transition:border-color .2s,box-shadow .2s;min-height:44px;
 }
 .fg input::placeholder{color:rgba(255,255,255,.25)}
 .fg select option{background:#0d2040}
@@ -66,81 +57,44 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   border:none;border-radius:12px;
   font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;
   color:var(--dark);cursor:pointer;letter-spacing:1px;
-  box-shadow:0 6px 24px rgba(245,197,24,.35);
-  transition:transform .15s,box-shadow .15s;
-  min-height:48px;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  box-shadow:0 6px 24px rgba(245,197,24,.35);transition:transform .15s,box-shadow .15s;
+  min-height:48px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
 }
 .btn-start:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,.5)}
 .btn-start:active{transform:scale(0.98)}
 
-/* Splash: hero only at first; form + footer reveal after click */
 .welcome-wrap .wcard,
-.welcome-wrap .welcome-foot{
-  opacity:0;visibility:hidden;max-height:0;overflow:hidden;
-  transition:opacity .4s ease, visibility .4s, max-height .5s ease;
-}
+.welcome-wrap .welcome-foot{opacity:0;visibility:hidden;max-height:0;overflow:hidden;transition:opacity .4s ease,visibility .4s,max-height .5s ease;}
 .welcome-wrap.splash-done .wcard,
-.welcome-wrap.splash-done .welcome-foot{
-  opacity:1;visibility:visible;max-height:2000px;
-}
+.welcome-wrap.splash-done .welcome-foot{opacity:1;visibility:visible;max-height:2000px;}
 
-/* Welcome hero: switch-style logo + "Click here to automate" (splash) */
-.welcome-hero{
-  text-align:center;margin-bottom:20px;
-  min-height:50vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-}
-.welcome-wrap.splash-done .welcome-hero{
-  min-height:0;margin-bottom:20px;
-}
+.welcome-hero{text-align:center;margin-bottom:20px;min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.welcome-wrap.splash-done .welcome-hero{min-height:0;margin-bottom:20px;}
 .automate-switch{
   display:inline-flex;align-items:center;justify-content:center;gap:12px;
-  padding:20px 36px;
-  background:rgba(255,255,255,.06);
-  border:2px solid rgba(79,163,232,.4);
-  border-radius:999px;
-  cursor:pointer;
-  box-shadow:0 0 0 0 rgba(245,197,24,.4);
-  animation:automateGlow 2s ease-in-out infinite;
-  transition:transform .2s, box-shadow .2s;
+  padding:20px 36px;background:rgba(255,255,255,.06);
+  border:2px solid rgba(79,163,232,.4);border-radius:999px;cursor:pointer;
+  animation:automateGlow 2s ease-in-out infinite;transition:transform .2s,box-shadow .2s;
 }
-.automate-switch:hover{ transform:scale(1.03); }
+.automate-switch:hover{transform:scale(1.03);}
 @keyframes automateGlow{
-  0%,100%{ box-shadow:0 0 20px rgba(245,197,24,.25),0 0 40px rgba(79,163,232,.15); border-color:rgba(79,163,232,.5); }
-  50%{ box-shadow:0 0 28px rgba(245,197,24,.45),0 0 56px rgba(79,163,232,.25); border-color:var(--yellow); }
+  0%,100%{box-shadow:0 0 20px rgba(245,197,24,.25),0 0 40px rgba(79,163,232,.15);border-color:rgba(79,163,232,.5);}
+  50%{box-shadow:0 0 28px rgba(245,197,24,.45),0 0 56px rgba(79,163,232,.25);border-color:var(--yellow);}
 }
-.automate-switch .logo-bubble{ flex-shrink:0; }
-.automate-switch .logo-text{ font-size:22px; }
-.automate-cta{
-  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;
-  color:var(--blue-light);margin-top:14px;
-  animation:automatePulse 2s ease-in-out infinite;
-}
-.welcome-wrap.splash-done .automate-cta{ display:none; }
-@keyframes automatePulse{ 0%,100%{ opacity:.85 } 50%{ opacity:1 } }
+.automate-switch .logo-bubble{flex-shrink:0;}
+.automate-switch .logo-text{font-size:22px;}
+.automate-cta{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--blue-light);margin-top:14px;animation:automatePulse 2s ease-in-out infinite;}
+.welcome-wrap.splash-done .automate-cta{display:none;}
+@keyframes automatePulse{0%,100%{opacity:.85}50%{opacity:1}}
 
-/* Welcome footer: Huawei, ID, ZRA Smart Invoice */
-.welcome-foot{
-  margin-top:28px;padding-top:24px;
-  border-top:1px solid rgba(79,163,232,.25);
-  display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px 40px;
-}
-.welcome-foot-item{
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  font-size:13px;font-weight:700;color:var(--blue-light);text-align:center;
-  letter-spacing:0.5px;
-}
-.welcome-foot-item img{ height:44px;width:auto;object-fit:contain;display:block; }
-.welcome-foot-item.smart-invoice img{
-  height:48px;background:#fff;padding:6px 10px;border-radius:10px;
-  box-shadow:0 2px 12px rgba(0,0,0,.35);
-}
+.welcome-foot{margin-top:28px;padding-top:24px;border-top:1px solid rgba(79,163,232,.25);display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:28px 40px;}
+.welcome-foot-item{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#ffffff;text-align:center;letter-spacing:0.5px;}
+.welcome-foot-item span{color:#ffffff !important;text-shadow:0 1px 2px rgba(0,0,0,.4);}
+.welcome-foot-item img{height:44px;width:auto;object-fit:contain;display:block;}
+.welcome-foot-item.smart-invoice img{height:48px;background:#fff;padding:6px 10px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.35);}
 
 /* GAME SHELL */
 #game{display:none;position:fixed;inset:0;overflow:hidden}
-
-/* CANVAS */
 #gc{display:block;position:absolute;top:0;left:0;width:100%;height:100%}
 
 /* HUD */
@@ -154,11 +108,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .hud-logo{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;white-space:nowrap}
 .hud-logo span{color:var(--yellow)}
 .hud-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.hud-badge{
-  background:rgba(79,163,232,.12);border:1px solid rgba(79,163,232,.25);
-  border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;
-  display:flex;align-items:center;gap:5px;white-space:nowrap;
-}
+.hud-badge{background:rgba(79,163,232,.12);border:1px solid rgba(79,163,232,.25);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;}
 .hud-badge .val{color:var(--yellow)}
 .prog-wrap{min-width:90px;max-width:160px}
 .prog-bar{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
@@ -166,19 +116,15 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 /* D-PAD */
 #dpad{
-  position:absolute;bottom:20px;right:20px;
-  z-index:10;display:grid;
+  position:absolute;bottom:20px;right:20px;z-index:10;display:grid;
   grid-template-areas:". up ." "left . right" ". down .";
-  grid-template-columns:56px 56px 56px;
-  grid-template-rows:56px 56px 56px;
-  gap:4px;
+  grid-template-columns:56px 56px 56px;grid-template-rows:56px 56px 56px;gap:4px;
 }
 .dpad-btn{
   background:rgba(26,123,212,.3);border:2px solid rgba(79,163,232,.45);
   border-radius:12px;display:flex;align-items:center;justify-content:center;
   font-size:20px;cursor:pointer;user-select:none;
-  transition:background .1s,transform .1s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  transition:background .1s,transform .1s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
 }
 .dpad-btn:active,.dpad-btn.pressed{background:rgba(245,197,24,.35);border-color:var(--yellow);transform:scale(.9)}
 #dpad-up{grid-area:up}#dpad-down{grid-area:down}#dpad-left{grid-area:left}#dpad-right{grid-area:right}
@@ -194,37 +140,23 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .psec h4{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue-light);font-weight:800;margin-bottom:7px}
 .org-name{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--yellow);font-weight:700;word-break:break-word;line-height:1.4}
 .stage-name{font-size:11px;color:#aac4e0;margin-top:4px}
-.tool-chip{
-  display:inline-flex;align-items:center;gap:3px;
-  background:rgba(26,123,212,.18);border:1px solid rgba(79,163,232,.28);
-  border-radius:14px;padding:3px 8px;font-size:9px;font-weight:700;
-  color:var(--blue-light);margin:2px;
-}
+.tool-chip{display:inline-flex;align-items:center;gap:3px;background:rgba(26,123,212,.18);border:1px solid rgba(79,163,232,.28);border-radius:14px;padding:3px 8px;font-size:9px;font-weight:700;color:var(--blue-light);margin:2px;}
 .tip-box{font-size:10px;color:#aac4e0;line-height:1.55}
 .tip-box.good{color:#86efac}
 .tip-box.note{color:#fde68a}
 
 /* MINI MAP */
 #minimap{
-  position:absolute;bottom:20px;left:208px;z-index:10;
-  background:rgba(7,17,31,.88);border:1px solid rgba(79,163,232,.3);
-  border-radius:10px;overflow:hidden;
+  position:absolute;bottom:56px;left:208px;z-index:10;
+  background:rgba(7,17,31,.92);border:1px solid rgba(79,163,232,.4);
+  border-radius:10px;overflow:hidden;padding:4px;
 }
+#minimap-title{font-size:8px;color:var(--blue-light);font-weight:800;text-transform:uppercase;letter-spacing:1px;text-align:center;padding:0 2px 3px;}
 
 /* WIN */
-#win{
-  display:none;position:fixed;inset:0;z-index:300;
-  align-items:center;justify-content:center;
-  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-}
+#win{display:none;position:fixed;inset:0;z-index:300;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);}
 #win.show{display:flex}
-.win-card{
-  background:linear-gradient(135deg,#0d2040,#0a3060);
-  border:2px solid rgba(245,197,24,.5);border-radius:24px;
-  padding:40px 32px;max-width:460px;width:92%;text-align:center;
-  box-shadow:0 0 80px rgba(245,197,24,.2),0 30px 80px rgba(0,0,0,.5);
-  position:relative;overflow:hidden;
-}
+.win-card{background:linear-gradient(135deg,#0d2040,#0a3060);border:2px solid rgba(245,197,24,.5);border-radius:24px;padding:40px 32px;max-width:460px;width:92%;text-align:center;box-shadow:0 0 80px rgba(245,197,24,.2),0 30px 80px rgba(0,0,0,.5);position:relative;overflow:hidden;}
 .win-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,197,24,.12) 0%,transparent 60%)}
 .star-big{font-size:68px;display:block;margin-bottom:10px;animation:starPop .8s cubic-bezier(.34,1.56,.64,1)}
 @keyframes starPop{from{transform:scale(0) rotate(-180deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
@@ -238,9 +170,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .btn-win:hover{transform:translateY(-2px)}
 .btn-win2{padding:12px 20px;background:transparent;border:1.5px solid rgba(245,197,24,.45);border-radius:11px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:var(--yellow);cursor:pointer;margin:4px;transition:all .15s}
 .btn-win2:hover{background:rgba(245,197,24,.1)}
-
 @keyframes floatUp{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(-160px) rotate(720deg) scale(0.5);opacity:0}}
 .cpic{position:absolute;pointer-events:none;animation:floatUp 2.2s ease forwards}
+.mon-badge{background:rgba(239,68,68,.18)!important;border-color:rgba(239,68,68,.55)!important;color:#fca5a5!important}
+.mon-badge .val{color:#f87171!important}
 
 /* KEYS HINT */
 #keyhint{
@@ -249,22 +182,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   border-radius:8px;padding:6px 10px;font-size:10px;color:var(--gray);
 }
 
-/* Powered by Huawei – bottom of game */
+/* Powered by Huawei */
 #game-powered-by{
   position:absolute;bottom:0;left:0;right:0;z-index:9;
   display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:8px 12px;
-  background:rgba(7,17,31,.85);border-top:1px solid rgba(79,163,232,.15);
-  font-size:10px;color:var(--gray);font-weight:600;
+  padding:8px 12px;background:rgba(7,17,31,.9);border-top:1px solid rgba(79,163,232,.2);
+  font-size:10px;color:#ffffff;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,.3);
 }
+#game-powered-by span{color:#ffffff !important;}
 #game-powered-by img{height:20px;width:auto;object-fit:contain;vertical-align:middle}
 
 @media(max-width:640px){
   #panel{display:none}
   #keyhint{display:none}
+  #minimap{left:8px;bottom:56px;}
   #dpad{right:10px;bottom:14px}
-  #game-powered-by{bottom:0;padding:6px 8px;font-size:9px}
-  #game-powered-by img{height:16px}
+  #game-powered-by{padding:8px 10px;font-size:10px;flex-wrap:wrap;justify-content:center;gap:6px}
+  #game-powered-by span{color:#fff !important;}
+  #game-powered-by img{height:18px}
 }
 @media(max-width:520px){
   .wcard .wform{grid-template-columns:1fr}
@@ -273,10 +208,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   .welcome-wrap.splash-done .welcome-hero{min-height:0}
   .automate-switch{padding:14px 24px}
   .automate-switch .logo-text{font-size:18px}
-  .welcome-foot{flex-direction:column;gap:20px;margin-top:22px;padding-top:20px}
-  .welcome-foot-item{font-size:11px;gap:8px}
-  .welcome-foot-item img{height:36px}
-  .welcome-foot-item.smart-invoice img{height:40px;padding:5px 8px}
+  .welcome-foot{flex-direction:column;gap:24px;margin-top:22px;padding-top:20px}
+  .welcome-foot-item{font-size:12px;gap:10px;min-width:0}
+  .welcome-foot-item span{font-size:12px;color:#fff !important;line-height:1.3;}
+  .welcome-foot-item img{height:40px}
+  .welcome-foot-item.smart-invoice img{height:44px;padding:6px 10px}
+  .fg input,.fg select{min-height:48px;font-size:16px;}
+  .btn-start{min-height:52px;font-size:15px;padding:16px 20px;}
 }
 </style>
 </head>
@@ -294,18 +232,14 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
     </div>
     <div class="wcard">
     <h2>Your Automation Journey</h2>
-
     <div class="wform">
     <div class="fg">
       <label>Salutation</label>
       <select id="psalutation">
         <option value="">— Title —</option>
-        <option value="Mr">Mr</option>
-        <option value="Mrs">Mrs</option>
-        <option value="Ms">Ms</option>
-        <option value="Miss">Miss</option>
-        <option value="Dr">Dr</option>
-        <option value="Prof">Prof</option>
+        <option value="Mr">Mr</option><option value="Mrs">Mrs</option>
+        <option value="Ms">Ms</option><option value="Miss">Miss</option>
+        <option value="Dr">Dr</option><option value="Prof">Prof</option>
       </select>
     </div>
     <div class="fg">
@@ -335,58 +269,34 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
       <label>Industry</label>
       <select id="pindustry">
         <option value="">— Select Industry —</option>
-        <option value="Accounting">Accounting</option>
-        <option value="Advertising">Advertising</option>
-        <option value="Aerospace">Aerospace</option>
-        <option value="Agriculture">Agriculture</option>
-        <option value="Airline">Airline</option>
-        <option value="Apparel & Accessories">Apparel &amp; Accessories</option>
-        <option value="Automotive">Automotive</option>
-        <option value="Banking">Banking</option>
-        <option value="Biotechnology">Biotechnology</option>
-        <option value="Broadcasting">Broadcasting</option>
-        <option value="Brokerage">Brokerage</option>
-        <option value="Chemical">Chemical</option>
-        <option value="Computer">Computer</option>
-        <option value="Consulting">Consulting</option>
-        <option value="Consumer Products">Consumer Products</option>
-        <option value="Cosmetics">Cosmetics</option>
-        <option value="Defense">Defense</option>
-        <option value="Department Stores">Department Stores</option>
-        <option value="Education">Education</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Energy">Energy</option>
-        <option value="Entertainment & Leisure">Entertainment &amp; Leisure</option>
-        <option value="Executive Search">Executive Search</option>
-        <option value="Financial Services">Financial Services</option>
+        <option value="Accounting">Accounting</option><option value="Advertising">Advertising</option>
+        <option value="Aerospace">Aerospace</option><option value="Agriculture">Agriculture</option>
+        <option value="Airline">Airline</option><option value="Apparel & Accessories">Apparel &amp; Accessories</option>
+        <option value="Automotive">Automotive</option><option value="Banking">Banking</option>
+        <option value="Biotechnology">Biotechnology</option><option value="Broadcasting">Broadcasting</option>
+        <option value="Brokerage">Brokerage</option><option value="Chemical">Chemical</option>
+        <option value="Computer">Computer</option><option value="Consulting">Consulting</option>
+        <option value="Consumer Products">Consumer Products</option><option value="Cosmetics">Cosmetics</option>
+        <option value="Defense">Defense</option><option value="Department Stores">Department Stores</option>
+        <option value="Education">Education</option><option value="Electronics">Electronics</option>
+        <option value="Energy">Energy</option><option value="Entertainment & Leisure">Entertainment &amp; Leisure</option>
+        <option value="Executive Search">Executive Search</option><option value="Financial Services">Financial Services</option>
         <option value="Finance & Banking">Finance &amp; Banking</option>
         <option value="Food, Beverage & Tobacco">Food, Beverage &amp; Tobacco</option>
-        <option value="Grocery">Grocery</option>
-        <option value="Health Care">Health Care</option>
-        <option value="Internet Publishing">Internet Publishing</option>
-        <option value="Investment Banking">Investment Banking</option>
-        <option value="Legal">Legal</option>
-        <option value="Manufacturing">Manufacturing</option>
-        <option value="Motion Picture & Video">Motion Picture &amp; Video</option>
-        <option value="Music">Music</option>
-        <option value="Newspaper Publishers">Newspaper Publishers</option>
-        <option value="NGO">NGO</option>
-        <option value="Online Auctions">Online Auctions</option>
-        <option value="Pension Funds">Pension Funds</option>
-        <option value="Pharmaceuticals">Pharmaceuticals</option>
-        <option value="Private Equity">Private Equity</option>
-        <option value="Publishing">Publishing</option>
-        <option value="Real Estate">Real Estate</option>
+        <option value="Grocery">Grocery</option><option value="Health Care">Health Care</option>
+        <option value="Internet Publishing">Internet Publishing</option><option value="Investment Banking">Investment Banking</option>
+        <option value="Legal">Legal</option><option value="Manufacturing">Manufacturing</option>
+        <option value="Motion Picture & Video">Motion Picture &amp; Video</option><option value="Music">Music</option>
+        <option value="Newspaper Publishers">Newspaper Publishers</option><option value="NGO">NGO</option>
+        <option value="Online Auctions">Online Auctions</option><option value="Pension Funds">Pension Funds</option>
+        <option value="Pharmaceuticals">Pharmaceuticals</option><option value="Private Equity">Private Equity</option>
+        <option value="Publishing">Publishing</option><option value="Real Estate">Real Estate</option>
         <option value="Retail & Wholesale">Retail &amp; Wholesale</option>
         <option value="Securities & Commodity Exchanges">Securities &amp; Commodity Exchanges</option>
-        <option value="Service">Service</option>
-        <option value="Soap & Detergent">Soap &amp; Detergent</option>
-        <option value="Software">Software</option>
-        <option value="Sports">Sports</option>
-        <option value="Technology">Technology</option>
-        <option value="Telecommunications">Telecommunications</option>
-        <option value="Television">Television</option>
-        <option value="Transportation">Transportation</option>
+        <option value="Service">Service</option><option value="Soap & Detergent">Soap &amp; Detergent</option>
+        <option value="Software">Software</option><option value="Sports">Sports</option>
+        <option value="Technology">Technology</option><option value="Telecommunications">Telecommunications</option>
+        <option value="Television">Television</option><option value="Transportation">Transportation</option>
         <option value="Venture Capital">Venture Capital</option>
       </select>
     </div>
@@ -428,6 +338,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
     <div class="hud-info">
       <div class="hud-badge">🏢 <span id="hud-org" class="val">—</span></div>
       <div class="hud-badge">📍 <span id="hud-stage" class="val">—</span></div>
+      <div class="hud-badge mon-badge">👾 <span id="hud-mon-ct" class="val">0/6</span> defeated</div>
       <div class="prog-wrap">
         <div style="font-size:9px;color:var(--gray);margin-bottom:2px;text-align:right" id="hud-pct">0%</div>
         <div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
@@ -445,23 +356,27 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
       <div class="stage-name" id="p-stage">—</div>
     </div>
     <div class="psec">
-      <h4>📍 Current Zone</h4>
-      <div class="tip-box" id="p-tip">Guide your robot to AutomateE HQ using arrow keys or the D-Pad!</div>
+      <h4>🗺️ Maze Hint</h4>
+      <div class="tip-box" id="p-tip">Dead ends hide your bottlenecks — explore them all, then reach AutomateE HQ!</div>
     </div>
     <div class="psec">
       <h4>🛠️ Tools Unlocked</h4>
-      <div id="p-tools"><span class="tool-chip">🔍 Walk to discover...</span></div>
+      <div id="p-tools"><span class="tool-chip">🔍 Explore dead ends...</span></div>
     </div>
     <div class="psec">
       <h4>📊 Journey Stats</h4>
-      <div style="font-size:10px;color:var(--gray);line-height:1.8" id="p-stats">
-        Steps: 0<br>Zones: 0/6
-      </div>
+      <div style="font-size:10px;color:var(--gray);line-height:1.8" id="p-stats">Steps: 0<br>Zones: 0/6</div>
     </div>
   </div>
 
   <!-- Key hint -->
-  <div id="keyhint">⌨️ Arrow keys to move</div>
+  <div id="keyhint">⌨️ Arrow keys to move · explore dead ends!</div>
+
+  <!-- Mini map -->
+  <div id="minimap">
+    <div id="minimap-title">🗺️ MAZE MAP</div>
+    <canvas id="mmcv"></canvas>
+  </div>
 
   <!-- D-Pad -->
   <div id="dpad">
@@ -496,12 +411,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 <script>
 // ═══════════════════════════════════════════════
-//  FRAPPE API (Customer + Lead registration)
+//  FRAPPE API
 // ═══════════════════════════════════════════════
 const FRAPPE = {
   base: 'http://41.63.62.101:8002',
   token: '0e801754fb7402f:ad9b04c0d0abf69',
-  /** POST via fetch; body as Blob to avoid Expect:100-continue (417) */
   async post(resource, data) {
     const url = this.base + '/api/resource/' + encodeURIComponent(resource);
     const raw = JSON.stringify(data);
@@ -510,24 +424,12 @@ const FRAPPE = {
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Cookie', 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image=');
     const body = new Blob([raw], { type: 'application/json' });
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: myHeaders,
-      body: body,
-      redirect: 'follow',
-    });
+    const res = await fetch(url, { method: 'POST', headers: myHeaders, body, redirect: 'follow' });
     const text = await res.text();
     let json = {};
     try { json = JSON.parse(text || '{}'); } catch (_) {}
     if (res.ok) return json;
-    const errDetail = {
-      status: res.status,
-      statusText: res.statusText,
-      url: res.url,
-      responseBody: text,
-      responseJson: json,
-      requestPayload: data,
-    };
+    const errDetail = { status: res.status, statusText: res.statusText, url: res.url, responseBody: text, responseJson: json, requestPayload: data };
     console.error('[AutomateE] Lead POST failed:', errDetail);
     const msg = json.exc_type || json.message || json._server_messages || text || ('HTTP ' + res.status + ' ' + res.statusText);
     throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
@@ -535,63 +437,58 @@ const FRAPPE = {
 };
 
 // ═══════════════════════════════════════════════
-//  CONSTANTS
+//  MAZE CONSTANTS
 // ═══════════════════════════════════════════════
-const T = 52; // tile size px
+const T = 48;          // tile size px
+const CELL_COLS = 14;  // logical maze cells wide
+const CELL_ROWS = 11;  // logical maze cells tall
+const MCOLS = CELL_COLS * 2 + 1;  // 29 physical columns
+const MROWS = CELL_ROWS * 2 + 1;  // 23 physical rows
 
-// Map legend: 0=road 1=solid-building 2=zone-tile 3=grass 4=park 5=HQ
-const MAP = [
-  [1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1],
-  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,1,1,1],
-  [1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,5,5,0,1,1,1],
-  [1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,5,5,0,1,1,1],
-  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1],
-  [1,1,0,1,1,0,1,1,0,0,1,1,0,1,2,2,0,1,1,0,1,1,1,0,1,1,0,1,1,1],
-  [1,1,0,1,1,0,1,1,0,0,1,1,0,1,2,2,0,1,1,0,1,1,1,0,0,0,0,1,1,1],
-  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-  [3,3,0,1,1,0,2,2,0,1,1,1,0,1,1,0,1,1,1,0,2,2,0,1,1,1,0,3,3,3],
-  [3,3,0,1,1,0,2,2,0,1,1,1,0,1,1,0,1,1,1,0,2,2,0,1,1,1,0,3,3,3],
-  [3,3,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
-  [3,3,0,1,1,0,1,1,1,0,2,2,0,1,1,0,2,2,0,1,1,0,1,1,1,0,0,3,3,3],
-  [3,3,0,1,1,0,1,1,1,0,2,2,0,1,1,0,2,2,0,1,1,0,1,1,1,0,0,3,3,3],
-  [3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
-  [3,3,0,1,1,1,0,1,1,0,1,1,0,2,2,0,1,1,0,1,1,0,1,1,1,0,0,3,3,3],
-  [3,3,0,1,1,1,0,1,1,0,1,1,0,2,2,0,1,1,0,1,1,0,1,1,1,0,0,3,3,3],
-  [3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
-  [3,3,3,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,0,1,1,0,3,3,3,3],
-  [3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3],
-  [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-];
+// Map tile values
+// 0=corridor  1=wall  2=zone  5=HQ  6=start
 
-const MCOLS = MAP[0].length;
-const MROWS = MAP.length;
+// ═══════════════════════════════════════════════
+//  DYNAMIC GLOBALS (assigned by generateMaze)
+// ═══════════════════════════════════════════════
+let MAP = [];
+let HQ_COL = 0, HQ_ROW = 0;
+let ZONES = [];       // zone objects with positions
+let START_COL = 1, START_ROW = CELL_ROWS * 2 - 1;
 
-// Zones — AutomateE solutions (what we offer)
-const ZONES = [
-  { id:'z0', col:14, row:6,  icon:'👥', label:'HR & Attendance',   color:'#6b7280',
+// ═══════════════════════════════════════════════
+//  ZONE TEMPLATES  (customer bottlenecks at dead ends)
+// ═══════════════════════════════════════════════
+const ZONE_TEMPLATES = [
+  { id:'z0', icon:'👥', label:'HR & Attendance', color:'#6b7280',
+    issue:'👾', issueLabel:'Manual timesheets & errors',
     tip:'AutomateE HR keeps time, leave and attendance in one place. No more paper timesheets!',
     tools:['HR Attendance','Leave Management','Payroll Integration','Employee Self-Service'] },
-  { id:'z1', col:6,  row:9,  icon:'📦', label:'Procurement & Inventory', color:'#3b82f6',
+  { id:'z1', icon:'📦', label:'Procurement & Inventory', color:'#3b82f6',
+    issue:'🐛', issueLabel:'Stock-outs & lost orders',
     tip:'Procurement and inventory control — from purchase requests to stock levels in real time.',
     tools:['Procurement','Purchase Orders','Stock Levels','Reorder Alerts'] },
-  { id:'z2', col:20, row:9,  icon:'🏢', label:'Asset Management',  color:'#8b5cf6',
+  { id:'z2', icon:'🏢', label:'Asset Management', color:'#8b5cf6',
+    issue:'👻', issueLabel:'Missing assets & no visibility',
     tip:'Track assets, maintenance and depreciation. Know where every asset is.',
     tools:['Asset Register','Maintenance Schedules','Depreciation','Asset Transfers'] },
-  { id:'z3', col:10, row:12, icon:'💰', label:'Finance',          color:'#f59e0b',
+  { id:'z3', icon:'💰', label:'Finance', color:'#f59e0b',
+    issue:'💀', issueLabel:'Delayed reconciliation & errors',
     tip:'Accounting, invoicing and payments. One system for your whole finance function.',
     tools:['Invoicing','Accounts Payable','Bank Reconciliation','Financial Reports'] },
-  { id:'z4', col:16, row:12, icon:'🤖', label:'AI & Insights',     color:'#10b981',
+  { id:'z4', icon:'🤖', label:'AI & Insights', color:'#10b981',
+    issue:'🕷️', issueLabel:'Data silos & guesswork',
     tip:'Predictive analytics and AI-driven insights. Turn data into decisions.',
     tools:['Predictive Analytics','Smart Dashboards','AI Insights','Automated Reports'] },
-  { id:'z5', col:13, row:10, icon:'📄', label:'Smart Invoice',    color:'#0ea5e9',
+  { id:'z5', icon:'📄', label:'Smart Invoice', color:'#0ea5e9',
+    issue:'📛', issueLabel:'ZRA penalties & manual invoicing',
     tip:'ZRA Smart Invoice certified. E-invoicing and tax compliance made simple.',
     tools:['Smart Invoice','E-Invoicing','ZRA Compliance','Tax-Ready Invoices'] },
 ];
 
-const HQ_COL = 24, HQ_ROW = 2;
-
-// Recommended AutomateE solutions by industry (keys = exact Frappe Industry Type name)
+// ═══════════════════════════════════════════════
+//  INDUSTRY TOOLS
+// ═══════════════════════════════════════════════
 const IND_TOOLS = {
   'Finance & Banking':['Finance & Accounting','Bank Reconciliation','Invoicing','Predictive Cash Flow','Compliance Reports'],
   'Banking':['Finance & Accounting','Bank Reconciliation','Invoicing','Predictive Cash Flow','Compliance Reports'],
@@ -609,24 +506,132 @@ const IND_TOOLS = {
 const IND_TOOLS_DEFAULT = ['HR Attendance','Procurement','Inventory','Asset Management','Finance & AI Insights'];
 
 // ═══════════════════════════════════════════════
+//  MAZE GENERATOR  — recursive backtracker (DFS)
+//  Dead ends = customer bottleneck locations
+//  HQ = farthest reachable dead end from start
+// ═══════════════════════════════════════════════
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function generateMaze() {
+  // Reset map — all walls
+  MAP = Array.from({ length: MROWS }, () => Array(MCOLS).fill(1));
+
+  const visited = Array.from({ length: CELL_ROWS }, () => Array(CELL_COLS).fill(false));
+
+  // Carve passages with recursive DFS
+  function carve(cx, cy) {
+    visited[cy][cx] = true;
+    MAP[cy * 2 + 1][cx * 2 + 1] = 0;
+    const dirs = shuffle([[0, -1], [1, 0], [0, 1], [-1, 0]]);
+    for (const [dx, dy] of dirs) {
+      const nx = cx + dx, ny = cy + dy;
+      if (nx >= 0 && nx < CELL_COLS && ny >= 0 && ny < CELL_ROWS && !visited[ny][nx]) {
+        // Remove wall between current and next
+        MAP[cy * 2 + 1 + dy][cx * 2 + 1 + dx] = 0;
+        carve(nx, ny);
+      }
+    }
+  }
+
+  // Entry point: bottom-left cell
+  const entryX = 0, entryY = CELL_ROWS - 1;
+  carve(entryX, entryY);
+
+  START_COL = entryX * 2 + 1;   // = 1
+  START_ROW = entryY * 2 + 1;   // = CELL_ROWS*2-1
+  MAP[START_ROW][START_COL] = 6; // mark start tile
+
+  // BFS from start to measure distances (for HQ placement)
+  const dist = Array.from({ length: MROWS }, () => Array(MCOLS).fill(-1));
+  const queue = [{ c: START_COL, r: START_ROW }];
+  dist[START_ROW][START_COL] = 0;
+  let head = 0;
+  while (head < queue.length) {
+    const { c, r } = queue[head++];
+    for (const [dc, dr] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+      const nc = c + dc, nr = r + dr;
+      if (nc >= 0 && nc < MCOLS && nr >= 0 && nr < MROWS &&
+          MAP[nr][nc] !== 1 && dist[nr][nc] === -1) {
+        dist[nr][nc] = dist[r][c] + 1;
+        queue.push({ c: nc, r: nr });
+      }
+    }
+  }
+
+  // Find all dead ends: corridor cells with exactly 1 open neighbour
+  const deadEnds = [];
+  for (let cy = 0; cy < CELL_ROWS; cy++) {
+    for (let cx = 0; cx < CELL_COLS; cx++) {
+      const px = cx * 2 + 1, py = cy * 2 + 1;
+      if (MAP[py][px] !== 0) continue; // only untagged corridors
+      let open = 0;
+      for (const [dc, dr] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+        const nr = py + dr, nc = px + dc;
+        if (nr >= 0 && nr < MROWS && nc >= 0 && nc < MCOLS && MAP[nr][nc] !== 1) open++;
+      }
+      if (open === 1) deadEnds.push({ col: px, row: py, d: dist[py][px] });
+    }
+  }
+
+  // Sort farthest first
+  deadEnds.sort((a, b) => b.d - a.d);
+
+  // HQ = absolute farthest dead end
+  const hqPos = deadEnds.shift();
+  HQ_COL = hqPos.col;
+  HQ_ROW = hqPos.row;
+  MAP[HQ_ROW][HQ_COL] = 5;
+
+  // Assign zones to next dead ends (shuffled so placement varies each game)
+  const remaining = deadEnds.slice();
+  shuffle(remaining);
+
+  // Ensure we always have enough slots (pad with corridor junction cells if needed)
+  if (remaining.length < ZONE_TEMPLATES.length) {
+    for (let cy = 0; cy < CELL_ROWS && remaining.length < ZONE_TEMPLATES.length; cy++) {
+      for (let cx = 0; cx < CELL_COLS && remaining.length < ZONE_TEMPLATES.length; cx++) {
+        const px = cx * 2 + 1, py = cy * 2 + 1;
+        if (MAP[py][px] === 0 && !(px === START_COL && py === START_ROW)) {
+          if (!remaining.find(p => p.col === px && p.row === py)) {
+            remaining.push({ col: px, row: py });
+          }
+        }
+      }
+    }
+  }
+
+  ZONES = ZONE_TEMPLATES.map((tmpl, i) => {
+    const pos = remaining[i];
+    MAP[pos.row][pos.col] = 2;
+    return { ...tmpl, col: pos.col, row: pos.row };
+  });
+}
+
+// ═══════════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════════
 let G = {
   name:'', org:'', level:0, industry:'other', email:'', phone:'',
-  col:3, row:19,     // current tile
-  px:0, py:0,        // smooth pixel pos
-  tpx:0, tpy:0,      // target pixel
+  col:1, row:1,
+  px:0, py:0, tpx:0, tpy:0,
   camX:0, camY:0,
   keys:{},
   steps:0,
   zonesHit:new Set(),
   won:false,
-  anim:0, lastT:0, moveT:0, MI:130,
+  anim:0, lastT:0, moveT:0, MI:120,
   dir:'down',
   particles:[],
   popup:null, popT:0,
   allTools:[],
-  saveDone:false,    // Customer + Lead saved to Frappe
+  saveDone:false,
+  monsterDefeat:{},
 };
 
 // ═══════════════════════════════════════════════
@@ -635,7 +640,7 @@ let G = {
 const CV = document.getElementById('gc');
 const CX = CV.getContext('2d');
 
-function resize(){
+function resize() {
   CV.width  = CV.offsetWidth  || window.innerWidth;
   CV.height = CV.offsetHeight || window.innerHeight;
 }
@@ -644,132 +649,194 @@ window.addEventListener('resize', resize);
 // ═══════════════════════════════════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════
-function rr(ctx,x,y,w,h,r){
+function rr(ctx, x, y, w, h, r) {
   ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r);
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
   ctx.closePath();
 }
 
-function colRow2px(c,r){ return { x: c*T+T/2, y: r*T+T/2 }; }
+function colRow2px(c, r) { return { x: c * T + T / 2, y: r * T + T / 2 }; }
 
-function canWalk(c,r){
-  if(c<0||c>=MCOLS||r<0||r>=MROWS) return false;
+function canWalk(c, r) {
+  if (c < 0 || c >= MCOLS || r < 0 || r >= MROWS) return false;
   const t = MAP[r][c];
-  return t===0 || t===2 || t===5; // road, zone or HQ
+  return t === 0 || t === 2 || t === 5 || t === 6;
 }
 
 // ═══════════════════════════════════════════════
 //  START
 // ═══════════════════════════════════════════════
-function startGame(){
-  const sal  = document.getElementById('psalutation').value.trim();
-  const nm   = document.getElementById('pname').value.trim();
-  const org  = document.getElementById('porg').value.trim();
+function startGame() {
+  const sal      = document.getElementById('psalutation').value.trim();
+  const nm       = document.getElementById('pname').value.trim();
+  const org      = document.getElementById('porg').value.trim();
   const jobTitle = document.getElementById('pjobtitle').value.trim();
-  const lv   = document.getElementById('plevel').value;
-  const ind  = document.getElementById('pindustry').value;
-  const email= document.getElementById('pemail').value.trim();
-  const phone= document.getElementById('pphone').value.trim();
-  if(!nm)  { alert('Please enter your name!'); return; }
-  if(!lv)  { alert('Please select your automation level!'); return; }
-  if(!ind) { alert('Please select your industry!'); return; }
-  if (email && !isValidEmail(email)) { alert('Please enter a valid email address (e.g. you@company.com) or leave it blank.'); return; }
+  const lv       = document.getElementById('plevel').value;
+  const ind      = document.getElementById('pindustry').value;
+  const email    = document.getElementById('pemail').value.trim();
+  const phone    = document.getElementById('pphone').value.trim();
 
-  G.salutation = sal; G.name = nm; G.org = org||'Your Organisation'; G.job_title = jobTitle; G.email = email; G.phone = phone;
+  if (!nm)  { alert('Please enter your name!'); return; }
+  if (!lv)  { alert('Please select your automation level!'); return; }
+  if (!ind) { alert('Please select your industry!'); return; }
+  if (email && !isValidEmail(email)) { alert('Please enter a valid email address or leave it blank.'); return; }
+
+  G.salutation = sal; G.name = nm; G.org = org || 'Your Organisation';
+  G.job_title = jobTitle; G.email = email; G.phone = phone;
   G.level = parseInt(lv); G.industry = ind;
-  G.steps=0; G.zonesHit=new Set(); G.won=false; G.particles=[]; G.popup=null; G.saveDone=false;
+  G.steps = 0; G.zonesHit = new Set(); G.won = false;
+  G.particles = []; G.popup = null; G.saveDone = false; G.monsterDefeat = {};
   G.allTools = IND_TOOLS[ind] || IND_TOOLS_DEFAULT;
 
-  // Start col/row by level  (on road tiles)
-  const SC=[[3,19],[5,17],[8,11],[12,8],[18,5]];
-  [G.col,G.row] = SC[G.level];
-  const p = colRow2px(G.col,G.row);
-  G.px=p.x; G.py=p.y; G.tpx=p.x; G.tpy=p.y;
-  G.camX=0; G.camY=0; G.dir='up';
+  // Generate a fresh random maze
+  generateMaze();
 
-  document.getElementById('welcome').style.display='none';
-  const gEl = document.getElementById('game');
-  gEl.style.display='block';
+  G.col = START_COL; G.row = START_ROW;
+  const p = colRow2px(G.col, G.row);
+  G.px = p.x; G.py = p.y; G.tpx = p.x; G.tpy = p.y;
+  G.camX = 0; G.camY = 0; G.dir = 'up';
+
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
   document.getElementById('hud-org').textContent = G.org;
   document.getElementById('p-org').textContent   = G.org;
 
   resize();
+  initMinimap();
   setupControls();
-  G.lastT=0;
+  G.lastT = 0;
   requestAnimationFrame(loop);
+}
+
+// ═══════════════════════════════════════════════
+//  MINIMAP
+// ═══════════════════════════════════════════════
+let MM, MX;
+const MM_CELL = 4; // pixels per maze tile on minimap
+
+function initMinimap() {
+  MM = document.getElementById('mmcv');
+  MX = MM.getContext('2d');
+  MM.width  = MCOLS * MM_CELL;
+  MM.height = MROWS * MM_CELL;
+  drawMinimap();
+}
+
+function drawMinimap() {
+  if (!MX) return;
+  MX.fillStyle = '#050e1a';
+  MX.fillRect(0, 0, MM.width, MM.height);
+
+  for (let r = 0; r < MROWS; r++) {
+    for (let c = 0; c < MCOLS; c++) {
+      const t = MAP[r][c];
+      if (t === 1) {
+        MX.fillStyle = '#0a1828';
+      } else if (t === 5) {
+        MX.fillStyle = '#f5c518';
+      } else if (t === 2) {
+        MX.fillStyle = '#3b82f6';
+      } else if (t === 6) {
+        MX.fillStyle = '#22c55e';
+      } else {
+        MX.fillStyle = '#1e3550';
+      }
+      MX.fillRect(c * MM_CELL, r * MM_CELL, MM_CELL, MM_CELL);
+    }
+  }
+
+  // Zone dots
+  ZONES.forEach(z => {
+    MX.fillStyle = G.zonesHit.has(z.id) ? '#22c55e' : '#ef4444';
+    MX.fillRect(z.col * MM_CELL - 1, z.row * MM_CELL - 1, MM_CELL + 2, MM_CELL + 2);
+  });
+
+  // HQ dot
+  MX.fillStyle = '#f5c518';
+  MX.fillRect(HQ_COL * MM_CELL - 1, HQ_ROW * MM_CELL - 1, MM_CELL + 2, MM_CELL + 2);
+
+  // Player dot
+  MX.fillStyle = '#ffffff';
+  MX.beginPath();
+  MX.arc(G.col * MM_CELL + MM_CELL / 2, G.row * MM_CELL + MM_CELL / 2, MM_CELL - 1, 0, Math.PI * 2);
+  MX.fill();
 }
 
 // ═══════════════════════════════════════════════
 //  CONTROLS
 // ═══════════════════════════════════════════════
-function setupControls(){
-  document.addEventListener('keydown',e=>{
-    G.keys[e.key]=true;
-    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+function setupControls() {
+  document.addEventListener('keydown', e => {
+    G.keys[e.key] = true;
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
   });
-  document.addEventListener('keyup',e=>{ G.keys[e.key]=false; });
+  document.addEventListener('keyup', e => { G.keys[e.key] = false; });
 
-  document.querySelectorAll('.dpad-btn').forEach(btn=>{
-    const d=btn.dataset.dir;
-    const on=()=>{G.keys[d]=true; btn.classList.add('pressed');};
-    const off=()=>{G.keys[d]=false; btn.classList.remove('pressed');};
-    btn.addEventListener('touchstart',e=>{e.preventDefault();on();},{passive:false});
-    btn.addEventListener('touchend',  e=>{e.preventDefault();off();},{passive:false});
-    btn.addEventListener('touchcancel',e=>{e.preventDefault();off();},{passive:false});
-    btn.addEventListener('mousedown',on);
-    btn.addEventListener('mouseup',off);
-    btn.addEventListener('mouseleave',off);
+  document.querySelectorAll('.dpad-btn').forEach(btn => {
+    const d = btn.dataset.dir;
+    const on  = () => { G.keys[d] = true;  btn.classList.add('pressed'); };
+    const off = () => { G.keys[d] = false; btn.classList.remove('pressed'); };
+    btn.addEventListener('touchstart',  e => { e.preventDefault(); on();  }, { passive: false });
+    btn.addEventListener('touchend',    e => { e.preventDefault(); off(); }, { passive: false });
+    btn.addEventListener('touchcancel', e => { e.preventDefault(); off(); }, { passive: false });
+    btn.addEventListener('mousedown', on);
+    btn.addEventListener('mouseup',   off);
+    btn.addEventListener('mouseleave', off);
   });
 
   // Swipe on canvas
-  let sx=0,sy=0;
-  CV.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-  CV.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)<12&&Math.abs(dy)<12) return;
-    if(Math.abs(dx)>Math.abs(dy)) step(dx>0?'right':'left');
-    else step(dy>0?'down':'up');
-  },{passive:true});
+  let sx = 0, sy = 0;
+  CV.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  CV.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+    if (Math.abs(dx) > Math.abs(dy)) step(dx > 0 ? 'right' : 'left');
+    else step(dy > 0 ? 'down' : 'up');
+  }, { passive: true });
 }
 
 // ═══════════════════════════════════════════════
 //  MOVEMENT
 // ═══════════════════════════════════════════════
-function step(dir){
-  if(G.won) return;
-  let nc=G.col, nr=G.row;
-  if(dir==='up')    nr--;
-  if(dir==='down')  nr++;
-  if(dir==='left')  nc--;
-  if(dir==='right') nc++;
-  if(!canWalk(nc,nr)) return;
-  G.dir=dir; G.col=nc; G.row=nr;
-  const p=colRow2px(nc,nr);
-  G.tpx=p.x; G.tpy=p.y;
+function step(dir) {
+  if (G.won) return;
+  let nc = G.col, nr = G.row;
+  if (dir === 'up')    nr--;
+  if (dir === 'down')  nr++;
+  if (dir === 'left')  nc--;
+  if (dir === 'right') nc++;
+  if (!canWalk(nc, nr)) return;
+  G.dir = dir; G.col = nc; G.row = nr;
+  const p = colRow2px(nc, nr);
+  G.tpx = p.x; G.tpy = p.y;
   G.steps++;
   checkZone(); checkHQ();
   updateHUD();
+  drawMinimap();
 }
 
-function checkZone(){
-  ZONES.forEach(z=>{
-    if(G.zonesHit.has(z.id)) return;
-    if(Math.abs(G.col-z.col)<=1 && Math.abs(G.row-z.row)<=1){
+function checkZone() {
+  ZONES.forEach(z => {
+    if (G.zonesHit.has(z.id)) return;
+    // Activate on exact tile (maze corridors are narrow)
+    if (G.col === z.col && G.row === z.row) {
       G.zonesHit.add(z.id);
-      G.popup=z; G.popT=240;
+      G.popup = z; G.popT = 260;
+      G.monsterDefeat[z.id] = 90;
       updatePanel(z);
       burst(G.px, G.py, z.color, 14);
+      burst(G.px, G.py, '#ef4444', 10, DEMOJIS);
     }
   });
 }
 
-function checkHQ(){
-  if(Math.abs(G.col-HQ_COL)<=1 && Math.abs(G.row-HQ_ROW)<=2 && !G.won){
-    G.won=true;
+function checkHQ() {
+  if (Math.abs(G.col - HQ_COL) <= 1 && Math.abs(G.row - HQ_ROW) <= 1 && !G.won) {
+    G.won = true;
     setTimeout(showWin, 700);
   }
 }
@@ -777,55 +844,56 @@ function checkHQ(){
 // ═══════════════════════════════════════════════
 //  LOOP
 // ═══════════════════════════════════════════════
-function loop(ts){
-  const dt = Math.min(ts-G.lastT, 60); G.lastT=ts;
-  G.anim += dt*0.007;
+function loop(ts) {
+  const dt = Math.min(ts - G.lastT, 60); G.lastT = ts;
+  G.anim += dt * 0.007;
 
-  // held-key movement
-  G.moveT+=dt;
-  if(G.moveT>=G.MI){
-    G.moveT=0;
-    if     (G.keys['ArrowUp']   ||G.keys['up'])    step('up');
-    else if(G.keys['ArrowDown'] ||G.keys['down'])  step('down');
-    else if(G.keys['ArrowLeft'] ||G.keys['left'])  step('left');
-    else if(G.keys['ArrowRight']||G.keys['right']) step('right');
+  // Held-key movement
+  G.moveT += dt;
+  if (G.moveT >= G.MI) {
+    G.moveT = 0;
+    if      (G.keys['ArrowUp']    || G.keys['up'])    step('up');
+    else if (G.keys['ArrowDown']  || G.keys['down'])  step('down');
+    else if (G.keys['ArrowLeft']  || G.keys['left'])  step('left');
+    else if (G.keys['ArrowRight'] || G.keys['right']) step('right');
   }
 
-  // smooth pixel follow
-  G.px += (G.tpx-G.px)*0.22;
-  G.py += (G.tpy-G.py)*0.22;
+  // Smooth pixel follow
+  G.px += (G.tpx - G.px) * 0.24;
+  G.py += (G.tpy - G.py) * 0.24;
 
-  // camera
-  const HUD_H = 50;
-  const PANEL_W = window.innerWidth>640 ? 200 : 0;
-  const targetCX = G.px - (CV.width  - PANEL_W)/2 - PANEL_W;
-  const targetCY = G.py - (CV.height - HUD_H)/2   - HUD_H;
-  G.camX += (targetCX-G.camX)*0.1;
-  G.camY += (targetCY-G.camY)*0.1;
-  G.camX = Math.max(0,Math.min(G.camX, MCOLS*T - CV.width));
-  G.camY = Math.max(0,Math.min(G.camY, MROWS*T - CV.height));
+  // Camera
+  const HUD_H  = 50;
+  const PANEL_W = window.innerWidth > 640 ? 200 : 0;
+  const targetCX = G.px - (CV.width  - PANEL_W) / 2 - PANEL_W;
+  const targetCY = G.py - (CV.height - HUD_H)   / 2 - HUD_H;
+  G.camX += (targetCX - G.camX) * 0.1;
+  G.camY += (targetCY - G.camY) * 0.1;
+  G.camX = Math.max(0, Math.min(G.camX, MCOLS * T - CV.width));
+  G.camY = Math.max(0, Math.min(G.camY, MROWS * T - CV.height));
 
-  // particles
-  G.particles = G.particles.filter(p=>{
-    p.life-=dt; p.y-=p.vy*dt/16; p.x+=p.vx*dt/16; p.vy*=0.97; return p.life>0;
+  // Particles
+  G.particles = G.particles.filter(p => {
+    p.life -= dt; p.y -= p.vy * dt / 16; p.x += p.vx * dt / 16; p.vy *= 0.97; return p.life > 0;
   });
 
-  if(G.popT>0) G.popT--; else if(G.popT===0){G.popup=null;G.popT=-1;}
+  if (G.popT > 0) G.popT--; else if (G.popT === 0) { G.popup = null; G.popT = -1; }
 
   render();
-  if(!G.won || G.particles.length) requestAnimationFrame(loop);
+  if (!G.won || G.particles.length) requestAnimationFrame(loop);
 }
 
 // ═══════════════════════════════════════════════
 //  RENDER
 // ═══════════════════════════════════════════════
-function render(){
-  CX.clearRect(0,0,CV.width,CV.height);
+function render() {
+  CX.clearRect(0, 0, CV.width, CV.height);
   CX.save();
   CX.translate(-G.camX, -G.camY);
 
   drawMap();
   drawZones();
+  drawMonsters();
   drawHQBuilding();
   drawParticles();
   drawRobot();
@@ -834,354 +902,521 @@ function render(){
   CX.restore();
 }
 
-// ---------- MAP ----------
-function drawMap(){
-  const c0=Math.max(0,Math.floor(G.camX/T));
-  const c1=Math.min(MCOLS, Math.ceil((G.camX+CV.width)/T)+1);
-  const r0=Math.max(0,Math.floor(G.camY/T));
-  const r1=Math.min(MROWS, Math.ceil((G.camY+CV.height)/T)+1);
+// ─────────────── MAP ───────────────
+function drawMap() {
+  const c0 = Math.max(0, Math.floor(G.camX / T));
+  const c1 = Math.min(MCOLS, Math.ceil((G.camX + CV.width)  / T) + 1);
+  const r0 = Math.max(0, Math.floor(G.camY / T));
+  const r1 = Math.min(MROWS, Math.ceil((G.camY + CV.height) / T) + 1);
 
-  for(let r=r0;r<r1;r++){
-    for(let c=c0;c<c1;c++){
-      const t=MAP[r][c];
-      const x=c*T, y=r*T;
-      if(t===1) drawBuilding(x,y,c,r);
-      else if(t===3||t===4) drawGrass(x,y,c,r);
-      else drawRoad(x,y); // 0,2,5 all get road base
+  for (let r = r0; r < r1; r++) {
+    for (let c = c0; c < c1; c++) {
+      const t = MAP[r][c];
+      const x = c * T, y = r * T;
+      if (t === 1) drawMazeWall(x, y, c, r);
+      else         drawMazeCorridor(x, y, c, r, t);
     }
   }
 }
 
-function drawRoad(x,y){
-  CX.fillStyle='#1a2a3e';
-  CX.fillRect(x,y,T,T);
-  CX.strokeStyle='rgba(255,255,255,0.04)';
-  CX.lineWidth=.5;
-  CX.strokeRect(x+.5,y+.5,T-1,T-1);
-}
+// Solid maze wall — dark stone with subtle depth lines
+function drawMazeWall(x, y, c, r) {
+  // Base
+  CX.fillStyle = '#080f1c';
+  CX.fillRect(x, y, T, T);
+  // Inner bevel (gives thick stone feel)
+  CX.fillStyle = '#0c1624';
+  CX.fillRect(x + 2, y + 2, T - 4, T - 4);
+  // Highlight top/left edge
+  CX.fillStyle = 'rgba(26,60,100,0.35)';
+  CX.fillRect(x + 2, y + 2, T - 4, 2);
+  CX.fillRect(x + 2, y + 2, 2, T - 4);
+  // Shadow bottom/right edge
+  CX.fillStyle = 'rgba(0,0,0,0.4)';
+  CX.fillRect(x + 2, y + T - 4, T - 4, 2);
+  CX.fillRect(x + T - 4, y + 2, 2, T - 4);
 
-function drawGrass(x,y,c,r){
-  // alternating subtle shades
-  const shade=((c+r)%2===0)?'#0b1f0e':'#0d2411';
-  CX.fillStyle=shade;
-  CX.fillRect(x,y,T,T);
-  // dots
-  CX.fillStyle='rgba(34,120,34,0.18)';
-  const seed=(c*17+r*13)%T;
-  CX.fillRect(x+seed%T,y+(seed*3)%T,2,2);
-  CX.fillRect(x+(seed*7)%T,y+(seed*11)%T,1,1);
-}
-
-const BCOLS=[['#112244','#0e1e3a'],['#0e1e3a','#131f40'],['#0f2046','#0d1c38']];
-function drawBuilding(x,y,c,r){
-  const bc=BCOLS[(c*3+r*7)%BCOLS.length];
-  CX.fillStyle=bc[0];
-  CX.fillRect(x,y,T,T);
-  // windows
-  const lit=(val)=>(val%3!==0);
-  for(let wi=0;wi<2;wi++){
-    for(let wj=0;wj<3;wj++){
-      CX.fillStyle=lit(c+r+wi+wj)?'rgba(245,197,24,0.28)':'rgba(26,123,212,0.12)';
-      CX.fillRect(x+5+wi*22,y+5+wj*14,14,9);
-    }
+  // Seed-based decoration: tech pipes or circuit lines
+  const seed = (c * 7 + r * 13) % 9;
+  if (seed === 0) {
+    // Horizontal pipe
+    CX.fillStyle = 'rgba(26,123,212,0.14)';
+    CX.fillRect(x + 4, y + T / 2 - 2, T - 8, 4);
+    CX.fillStyle = 'rgba(26,123,212,0.07)';
+    CX.fillRect(x + 4, y + T / 2 - 1, T - 8, 2);
+  } else if (seed === 3) {
+    // Vertical pipe
+    CX.fillStyle = 'rgba(26,123,212,0.14)';
+    CX.fillRect(x + T / 2 - 2, y + 4, 4, T - 8);
+  } else if (seed === 6) {
+    // Corner circuit dot
+    CX.fillStyle = 'rgba(245,197,24,0.1)';
+    CX.beginPath(); CX.arc(x + T / 2, y + T / 2, 3, 0, Math.PI * 2); CX.fill();
   }
-  CX.strokeStyle='rgba(0,0,0,0.35)';
-  CX.lineWidth=1;
-  CX.strokeRect(x+.5,y+.5,T-1,T-1);
 }
 
-// ---------- ZONES ----------
-function drawZones(){
-  ZONES.forEach((z,i)=>{
-    const reached=G.zonesHit.has(z.id);
-    const wx=z.col*T, wy=z.row*T;
-    const pulse=Math.sin(G.anim*2.2+i*1.1)*0.25+0.75;
+// Open maze corridor floor
+function drawMazeCorridor(x, y, c, r, tileType) {
+  // Base floor colour — slightly lighter for start tile
+  if (tileType === 6) {
+    CX.fillStyle = '#0e2a18'; // green tint for start
+  } else {
+    CX.fillStyle = '#0f1e30';
+  }
+  CX.fillRect(x, y, T, T);
 
-    // Glow
+  // Subtle floor tile grid lines
+  CX.strokeStyle = 'rgba(255,255,255,0.03)';
+  CX.lineWidth = 0.5;
+  CX.strokeRect(x + 0.5, y + 0.5, T - 1, T - 1);
+
+  // Very faint centre crosshair to help with navigation
+  CX.fillStyle = 'rgba(79,163,232,0.04)';
+  CX.fillRect(x + T / 2 - 1, y + 4, 2, T - 8);
+  CX.fillRect(x + 4, y + T / 2 - 1, T - 8, 2);
+
+  // Start tile: green glow mark
+  if (tileType === 6) {
+    CX.fillStyle = 'rgba(34,197,94,0.18)';
+    CX.fillRect(x + 4, y + 4, T - 8, T - 8);
+    CX.font = `bold 9px Orbitron,sans-serif`;
+    CX.fillStyle = 'rgba(34,197,94,0.6)';
+    CX.textAlign = 'center'; CX.textBaseline = 'middle';
+    CX.fillText('START', x + T / 2, y + T / 2);
+  }
+}
+
+// ─────────────── ZONES (dead-end bottlenecks) ───────────────
+function drawZones() {
+  ZONES.forEach((z, i) => {
+    const reached = G.zonesHit.has(z.id);
+    const wx = z.col * T, wy = z.row * T;
+    const cx = wx + T / 2, cy = wy + T / 2;
+    const pulse = Math.sin(G.anim * 2.2 + i * 1.1) * 0.25 + 0.75;
+
+    // Danger zone glow (not reached)
+    if (!reached) {
+      CX.save();
+      CX.globalAlpha = Math.sin(G.anim * 2.5 + i * 0.7) * 0.12 + 0.28;
+      const dr = CX.createRadialGradient(cx, cy, T * 0.2, cx, cy, T * 2);
+      dr.addColorStop(0, 'rgba(239,68,68,0.6)');
+      dr.addColorStop(0.4, 'rgba(239,68,68,0.15)');
+      dr.addColorStop(1, 'transparent');
+      CX.fillStyle = dr;
+      CX.fillRect(cx - T * 2, cy - T * 2, T * 4, T * 4);
+      CX.restore();
+    }
+
+    // Zone glow
     CX.save();
-    CX.globalAlpha=reached?0.9:pulse*0.7;
-    const g=CX.createRadialGradient(wx+T,wy+T,4,wx+T,wy+T,T*1.4);
-    g.addColorStop(0,z.color+'99');
-    g.addColorStop(1,'transparent');
-    CX.fillStyle=g;
-    CX.fillRect(wx-T/2,wy-T/2,T*3,T*3);
+    CX.globalAlpha = reached ? 0.9 : pulse * 0.55;
+    const g = CX.createRadialGradient(cx, cy, 2, cx, cy, T * 0.85);
+    g.addColorStop(0, z.color + 'cc');
+    g.addColorStop(1, 'transparent');
+    CX.fillStyle = g;
+    CX.fillRect(wx - T * 0.2, wy - T * 0.2, T * 1.4, T * 1.4);
     CX.restore();
 
-    // Platform
-    CX.fillStyle=reached?z.color+'cc':z.color+'55';
-    rr(CX,wx+3,wy+3,T*2-6,T*2-6,8);
-    CX.fill();
-    CX.strokeStyle=reached?z.color:z.color+'88';
-    CX.lineWidth=2;
-    rr(CX,wx+3,wy+3,T*2-6,T*2-6,8);
-    CX.stroke();
+    // Platform tile
+    CX.fillStyle = reached ? z.color + 'cc' : z.color + '33';
+    rr(CX, wx + 3, wy + 3, T - 6, T - 6, 7); CX.fill();
+    CX.strokeStyle = reached ? z.color : 'rgba(239,68,68,0.75)';
+    CX.lineWidth = reached ? 2.5 : 1.5;
+    rr(CX, wx + 3, wy + 3, T - 6, T - 6, 7); CX.stroke();
 
-    // Icon
-    CX.font=`${T*0.52}px serif`;
-    CX.textAlign='center'; CX.textBaseline='middle';
-    CX.fillText(z.icon, wx+T, wy+T*0.82);
+    // Dead-end corner marks (two small brackets to signal it's a dead end)
+    if (!reached) {
+      CX.strokeStyle = 'rgba(239,68,68,0.45)';
+      CX.lineWidth = 1.5;
+      CX.beginPath();
+      CX.moveTo(wx + 3, wy + 10); CX.lineTo(wx + 3, wy + 3); CX.lineTo(wx + 10, wy + 3);
+      CX.stroke();
+      CX.beginPath();
+      CX.moveTo(wx + T - 3, wy + 10); CX.lineTo(wx + T - 3, wy + 3); CX.lineTo(wx + T - 10, wy + 3);
+      CX.stroke();
+    }
 
-    // Label
-    CX.font=`bold 9px Nunito,sans-serif`;
-    CX.fillStyle=reached?'#fff':'rgba(255,255,255,0.85)';
-    CX.fillText(z.label, wx+T, wy+T*1.48);
+    // Ghost issue icon
+    if (!reached) {
+      CX.save(); CX.globalAlpha = 0.09;
+      CX.font = `${T * 0.75}px serif`;
+      CX.textAlign = 'center'; CX.textBaseline = 'middle';
+      CX.fillText(z.issue, cx, cy);
+      CX.restore();
+    }
 
-    // Tick
-    if(reached){
-      CX.font='bold 14px serif';
-      CX.fillStyle='#22c55e';
-      CX.fillText('✓', wx+T*1.72, wy+T*0.38);
+    // Solution icon
+    CX.save();
+    CX.globalAlpha = reached ? 1 : 0.82;
+    CX.font = `${T * 0.42}px serif`;
+    CX.textAlign = 'center'; CX.textBaseline = 'middle';
+    CX.fillText(z.icon, cx, cy - 2);
+    CX.restore();
+
+    // Label pill below tile
+    CX.font = 'bold 8px Nunito,sans-serif';
+    CX.textAlign = 'center'; CX.textBaseline = 'top';
+    const lw = CX.measureText(z.label).width + 10;
+    CX.fillStyle = 'rgba(6,14,30,0.92)';
+    rr(CX, cx - lw / 2, wy + T + 2, lw, 13, 4); CX.fill();
+    CX.fillStyle = reached ? '#86efac' : 'rgba(255,255,255,0.78)';
+    CX.fillText(z.label, cx, wy + T + 4);
+
+    // State badge
+    if (reached) {
+      CX.font = '11px serif';
+      CX.textBaseline = 'middle';
+      CX.fillText('✅', wx + T - 6, wy + 7);
+    } else {
+      CX.save();
+      CX.globalAlpha = Math.sin(G.anim * 4.2 + i * 0.8) * 0.3 + 0.7;
+      CX.font = '10px serif';
+      CX.textBaseline = 'middle';
+      CX.fillText('⚠️', wx + T - 7, wy + 7);
+      CX.restore();
     }
   });
 }
 
-// ---------- HQ ----------
-function drawHQBuilding(){
-  const x=HQ_COL*T, y=HQ_ROW*T;
-  const pulse=Math.sin(G.anim*1.8)*0.22+0.78;
+// ─────────────── MONSTERS ───────────────
+function drawMonsters() {
+  const a = G.anim;
+  ZONES.forEach((z, i) => {
+    const defeated = G.zonesHit.has(z.id);
+    const cx = z.col * T + T / 2, cy = z.row * T + T / 2;
+
+    // Defeat flash
+    if (G.monsterDefeat[z.id] > 0) {
+      const t = G.monsterDefeat[z.id] / 90;
+      G.monsterDefeat[z.id] = Math.max(0, G.monsterDefeat[z.id] - 1.7);
+      CX.save();
+      CX.globalAlpha = t;
+      const sc = 1 + (1 - t) * 1.2;
+      CX.font = `${Math.round(26 * sc)}px serif`;
+      CX.textAlign = 'center'; CX.textBaseline = 'middle';
+      CX.fillText('💀', cx, cy - (1 - t) * 30 + Math.sin(a * 9) * 2);
+      CX.font = `bold ${Math.round(9 * sc)}px Orbitron,sans-serif`;
+      CX.fillStyle = `rgba(34,197,94,${t})`;
+      CX.textBaseline = 'bottom';
+      CX.fillText('ELIMINATED!', cx, cy - 26 - (1 - t) * 18);
+      CX.restore();
+      return;
+    }
+    if (defeated) return;
+
+    // Orbit within the single tile
+    const ox = Math.sin(a * 1.28 + i * 1.14) * T * 0.28;
+    const oy = Math.cos(a * 1.04 + i * 0.96) * T * 0.22;
+    const bob = Math.sin(a * 3.7 + i * 0.75) * 3;
+    const mx = cx + ox, my = cy + oy + bob;
+
+    // Danger aura
+    CX.save();
+    CX.globalAlpha = Math.sin(a * 2.7 + i * 0.55) * 0.15 + 0.38;
+    const dg = CX.createRadialGradient(mx, my, 2, mx, my, 22);
+    dg.addColorStop(0, 'rgba(239,68,68,0.95)');
+    dg.addColorStop(0.4, 'rgba(239,68,68,0.4)');
+    dg.addColorStop(1, 'transparent');
+    CX.fillStyle = dg;
+    CX.beginPath(); CX.arc(mx, my, 22, 0, Math.PI * 2); CX.fill();
+    CX.restore();
+
+    // Shadow
+    CX.fillStyle = 'rgba(0,0,0,0.2)';
+    CX.beginPath(); CX.ellipse(mx, cy + T * 0.38, 7, 2.5, 0, 0, Math.PI * 2); CX.fill();
+
+    // Monster emoji
+    CX.font = '22px serif';
+    CX.textAlign = 'center'; CX.textBaseline = 'middle';
+    CX.fillText(z.issue, mx, my);
+
+    // Issue label bubble
+    CX.font = 'bold 7px Nunito,sans-serif';
+    CX.textBaseline = 'middle';
+    const lw2 = CX.measureText(z.issueLabel).width + 10;
+    const lx = mx - lw2 / 2, ly = my - 32;
+    CX.fillStyle = 'rgba(80,0,0,0.9)';
+    rr(CX, lx, ly, lw2, 13, 4); CX.fill();
+    CX.strokeStyle = 'rgba(239,68,68,0.9)'; CX.lineWidth = 1;
+    rr(CX, lx, ly, lw2, 13, 4); CX.stroke();
+    CX.fillStyle = '#fca5a5';
+    CX.fillText(z.issueLabel, mx, ly + 6.5);
+
+    // Threat bar
+    const bw = 36, bh = 4, bx2 = mx - bw / 2, by2 = my + 14;
+    CX.fillStyle = 'rgba(0,0,0,0.5)';
+    rr(CX, bx2 - 1, by2 - 1, bw + 2, bh + 2, 2); CX.fill();
+    const thr = 0.5 + Math.sin(a * 1.9 + i * 0.6) * 0.5;
+    CX.fillStyle = '#ef4444';
+    rr(CX, bx2, by2, bw * thr, bh, 2); CX.fill();
+    CX.font = 'bold 6px Nunito,sans-serif';
+    CX.fillStyle = '#fca5a5'; CX.textBaseline = 'top';
+    CX.fillText('⚠ THREAT', mx, by2 + 6);
+  });
+}
+
+// ─────────────── HQ BUILDING ───────────────
+function drawHQBuilding() {
+  const x = HQ_COL * T, y = HQ_ROW * T;
+  const cx2 = x + T / 2;
+  const pulse = Math.sin(G.anim * 1.8) * 0.22 + 0.78;
 
   // Outer glow
   CX.save();
-  CX.globalAlpha=pulse;
-  const g=CX.createRadialGradient(x+T,y+T*1.5,6,x+T,y+T*1.5,T*3);
-  g.addColorStop(0,'rgba(245,197,24,0.35)');
-  g.addColorStop(1,'transparent');
-  CX.fillStyle=g;
-  CX.fillRect(x-T,y-T,T*4,T*5);
+  CX.globalAlpha = pulse;
+  const g = CX.createRadialGradient(cx2, y + T, 4, cx2, y + T, T * 2.8);
+  g.addColorStop(0, 'rgba(245,197,24,0.45)');
+  g.addColorStop(1, 'transparent');
+  CX.fillStyle = g;
+  CX.fillRect(cx2 - T * 2.5, y - T, T * 5, T * 4);
   CX.restore();
 
-  const bx=x-T*0.3, by=y, bw=T*2.6, bh=T*3.2;
-
-  // Main body
-  CX.fillStyle='#0c2550';
-  rr(CX,bx,by,bw,bh,12); CX.fill();
-  CX.strokeStyle='rgba(245,197,24,0.75)';
-  CX.lineWidth=2.5;
-  rr(CX,bx,by,bw,bh,12); CX.stroke();
+  // Building body (wider than one tile using drawing coordinates)
+  const bx = x - T * 0.35, by = y - T * 0.1, bw = T * 1.7, bh = T * 1.8;
+  CX.fillStyle = '#0c2550';
+  rr(CX, bx, by, bw, bh, 10); CX.fill();
+  CX.strokeStyle = 'rgba(245,197,24,0.8)';
+  CX.lineWidth = 2.5;
+  rr(CX, bx, by, bw, bh, 10); CX.stroke();
 
   // Windows
-  for(let wi=0;wi<3;wi++){
-    for(let wj=0;wj<4;wj++){
-      const lit=((wi+wj+Math.floor(G.anim*0.8))%3!==0);
-      CX.fillStyle=lit?'rgba(245,197,24,0.42)':'rgba(79,163,232,0.22)';
-      CX.fillRect(bx+8+wi*((bw-20)/3),by+8+wj*((bh-24)/4),(bw-24)/3,(bh-28)/4);
+  for (let wi = 0; wi < 2; wi++) {
+    for (let wj = 0; wj < 3; wj++) {
+      const lit = ((wi + wj + Math.floor(G.anim * 0.8)) % 3 !== 0);
+      CX.fillStyle = lit ? 'rgba(245,197,24,0.45)' : 'rgba(79,163,232,0.18)';
+      CX.fillRect(bx + 8 + wi * ((bw - 18) / 2), by + 8 + wj * ((bh - 28) / 3), (bw - 24) / 2, (bh - 28) / 3 - 2);
     }
   }
 
   // Sign band
-  CX.fillStyle='rgba(245,197,24,0.9)';
-  CX.fillRect(bx+6,by+bh-22,bw-12,18);
-  CX.font='bold 9px Orbitron,sans-serif';
-  CX.fillStyle='#07111f';
-  CX.textAlign='center'; CX.textBaseline='middle';
-  CX.fillText('AutomateE HQ', bx+bw/2, by+bh-13);
+  CX.fillStyle = 'rgba(245,197,24,0.92)';
+  CX.fillRect(bx + 5, by + bh - 18, bw - 10, 15);
+  CX.font = 'bold 7px Orbitron,sans-serif';
+  CX.fillStyle = '#07111f';
+  CX.textAlign = 'center'; CX.textBaseline = 'middle';
+  CX.fillText('AutomateE HQ', bx + bw / 2, by + bh - 10);
 
-  // Antenna + flag
-  CX.strokeStyle='#f5c518'; CX.lineWidth=2;
-  CX.beginPath(); CX.moveTo(bx+bw/2,by); CX.lineTo(bx+bw/2,by-24); CX.stroke();
-  CX.fillStyle='#f5c518';
-  CX.fillRect(bx+bw/2,by-24,16,10);
+  // Antenna
+  CX.strokeStyle = '#f5c518'; CX.lineWidth = 2;
+  CX.beginPath(); CX.moveTo(bx + bw / 2, by); CX.lineTo(bx + bw / 2, by - 22); CX.stroke();
+  CX.fillStyle = '#f5c518';
+  CX.fillRect(bx + bw / 2, by - 22, 14, 8);
 
   // Floating label
-  const fl=Math.sin(G.anim*1.8)*3;
-  CX.font='bold 11px Orbitron,sans-serif';
-  CX.fillStyle='#f5c518';
-  CX.textAlign='center'; CX.textBaseline='bottom';
-  CX.fillText('⭐ YOUR DESTINATION', bx+bw/2, by-26+fl);
+  const fl = Math.sin(G.anim * 1.8) * 3;
+  CX.font = 'bold 10px Orbitron,sans-serif';
+  CX.fillStyle = '#f5c518';
+  CX.textAlign = 'center'; CX.textBaseline = 'bottom';
+  CX.fillText('⭐ YOUR DESTINATION', bx + bw / 2, by - 24 + fl);
 }
 
-// ---------- ROBOT ----------
-function drawRobot(){
-  const bob = Math.sin(G.anim*5.5)*2.8;
-  const arm = Math.sin(G.anim*5.5)*0.42;
+// ─────────────── ROBOT ───────────────
+function drawRobot() {
+  const bob = Math.sin(G.anim * 5.5) * 2.8;
+  const arm = Math.sin(G.anim * 5.5) * 0.42;
   const x = G.px, y = G.py + bob;
 
   CX.save();
-  CX.translate(x,y);
+  CX.translate(x, y);
 
   // Shadow
-  CX.fillStyle='rgba(0,0,0,0.22)';
-  CX.beginPath();
-  CX.ellipse(0,16,11,4,0,0,Math.PI*2);
-  CX.fill();
+  CX.fillStyle = 'rgba(0,0,0,0.22)';
+  CX.beginPath(); CX.ellipse(0, 16, 11, 4, 0, 0, Math.PI * 2); CX.fill();
 
   // Body glow
-  CX.save();
-  CX.globalAlpha=0.35;
-  const bg=CX.createRadialGradient(0,0,3,0,0,22);
-  bg.addColorStop(0,'rgba(245,197,24,0.7)');
-  bg.addColorStop(1,'transparent');
-  CX.fillStyle=bg;
-  CX.fillRect(-22,-26,44,44);
-  CX.restore();
+  CX.save(); CX.globalAlpha = 0.32;
+  const bg = CX.createRadialGradient(0, 0, 3, 0, 0, 22);
+  bg.addColorStop(0, 'rgba(245,197,24,0.7)');
+  bg.addColorStop(1, 'transparent');
+  CX.fillStyle = bg; CX.fillRect(-22, -26, 44, 44); CX.restore();
 
   // Legs
-  const ls=Math.sin(G.anim*5.5)*5;
-  CX.fillStyle='#0d5ca8';
-  CX.fillRect(-8+ls,9,6,11); CX.fillRect(2-ls,9,6,11);
-  // Feet
-  CX.fillStyle='#f5c518';
-  CX.fillRect(-9+ls,19,8,4); CX.fillRect(1-ls,19,8,4);
+  const ls = Math.sin(G.anim * 5.5) * 5;
+  CX.fillStyle = '#0d5ca8';
+  CX.fillRect(-8 + ls, 9, 6, 11); CX.fillRect(2 - ls, 9, 6, 11);
+  CX.fillStyle = '#f5c518';
+  CX.fillRect(-9 + ls, 19, 8, 4); CX.fillRect(1 - ls, 19, 8, 4);
 
   // Left arm
-  CX.save(); CX.translate(-12,-2); CX.rotate(-arm-0.15);
-  CX.fillStyle='#f5c518'; CX.fillRect(-4,0,5,11);
-  CX.fillStyle='#d4a800'; CX.fillRect(-5,10,7,4);
-  CX.restore();
+  CX.save(); CX.translate(-12, -2); CX.rotate(-arm - 0.15);
+  CX.fillStyle = '#f5c518'; CX.fillRect(-4, 0, 5, 11);
+  CX.fillStyle = '#d4a800'; CX.fillRect(-5, 10, 7, 4); CX.restore();
   // Right arm
-  CX.save(); CX.translate(12,-2); CX.rotate(arm+0.15);
-  CX.fillStyle='#f5c518'; CX.fillRect(-1,0,5,11);
-  CX.fillStyle='#d4a800'; CX.fillRect(-1,10,7,4);
-  CX.restore();
+  CX.save(); CX.translate(12, -2); CX.rotate(arm + 0.15);
+  CX.fillStyle = '#f5c518'; CX.fillRect(-1, 0, 5, 11);
+  CX.fillStyle = '#d4a800'; CX.fillRect(-1, 10, 7, 4); CX.restore();
 
   // Body
-  CX.fillStyle='#f5c518';
-  rr(CX,-11,-9,22,20,5); CX.fill();
-  CX.fillStyle='#d4a800'; CX.fillRect(-11,1,22,2);
+  CX.fillStyle = '#f5c518';
+  rr(CX, -11, -9, 22, 20, 5); CX.fill();
+  CX.fillStyle = '#d4a800'; CX.fillRect(-11, 1, 22, 2);
   // Chest orb
-  CX.beginPath(); CX.arc(0,-1,5,0,Math.PI*2); CX.fillStyle='#1a7bd4'; CX.fill();
-  const orb=Math.sin(G.anim*4)*0.5+0.5;
-  CX.beginPath(); CX.arc(0,-1,3,0,Math.PI*2); CX.fillStyle=`rgba(79,163,232,${0.5+orb*0.5})`; CX.fill();
+  CX.beginPath(); CX.arc(0, -1, 5, 0, Math.PI * 2); CX.fillStyle = '#1a7bd4'; CX.fill();
+  const orb = Math.sin(G.anim * 4) * 0.5 + 0.5;
+  CX.beginPath(); CX.arc(0, -1, 3, 0, Math.PI * 2); CX.fillStyle = `rgba(79,163,232,${0.5 + orb * 0.5})`; CX.fill();
 
   // Head
-  CX.fillStyle='#f5c518';
-  rr(CX,-10,-24,20,17,6); CX.fill();
+  CX.fillStyle = '#f5c518';
+  rr(CX, -10, -24, 20, 17, 6); CX.fill();
   // Visor
-  CX.fillStyle='rgba(26,123,212,0.88)';
-  rr(CX,-8,-22,16,9,3); CX.fill();
+  CX.fillStyle = 'rgba(26,123,212,0.88)';
+  rr(CX, -8, -22, 16, 9, 3); CX.fill();
   // Eyes
-  const ex = G.dir==='left'?-2 : G.dir==='right'?2 : 0;
-  CX.fillStyle='#7dd3fc';
-  CX.beginPath(); CX.arc(-3+ex,-18,2.2,0,Math.PI*2); CX.fill();
-  CX.beginPath(); CX.arc( 3+ex,-18,2.2,0,Math.PI*2); CX.fill();
-  CX.fillStyle='#fff';
-  CX.beginPath(); CX.arc(-3+ex,-18,1,0,Math.PI*2); CX.fill();
-  CX.beginPath(); CX.arc( 3+ex,-18,1,0,Math.PI*2); CX.fill();
+  const ex = G.dir === 'left' ? -2 : G.dir === 'right' ? 2 : 0;
+  CX.fillStyle = '#7dd3fc';
+  CX.beginPath(); CX.arc(-3 + ex, -18, 2.2, 0, Math.PI * 2); CX.fill();
+  CX.beginPath(); CX.arc( 3 + ex, -18, 2.2, 0, Math.PI * 2); CX.fill();
+  CX.fillStyle = '#fff';
+  CX.beginPath(); CX.arc(-3 + ex, -18, 1, 0, Math.PI * 2); CX.fill();
+  CX.beginPath(); CX.arc( 3 + ex, -18, 1, 0, Math.PI * 2); CX.fill();
 
   // Antenna
-  CX.strokeStyle='#f5c518'; CX.lineWidth=1.5;
-  CX.beginPath(); CX.moveTo(0,-24); CX.lineTo(0,-33); CX.stroke();
-  const ap=Math.sin(G.anim*5)*0.4+0.6;
-  CX.fillStyle=`rgba(245,197,24,${ap})`;
-  CX.beginPath(); CX.arc(0,-34,3,0,Math.PI*2); CX.fill();
+  CX.strokeStyle = '#f5c518'; CX.lineWidth = 1.5;
+  CX.beginPath(); CX.moveTo(0, -24); CX.lineTo(0, -33); CX.stroke();
+  const ap = Math.sin(G.anim * 5) * 0.4 + 0.6;
+  CX.fillStyle = `rgba(245,197,24,${ap})`;
+  CX.beginPath(); CX.arc(0, -34, 3, 0, Math.PI * 2); CX.fill();
 
-  // ORG NAME TAG above robot
-  CX.font='bold 10px Nunito,sans-serif';
-  CX.textAlign='center'; CX.textBaseline='bottom';
-  const tw = CX.measureText(G.org).width+10;
-  CX.fillStyle='rgba(10,22,45,0.9)';
-  rr(CX,-tw/2,-48,tw,14,4); CX.fill();
-  CX.strokeStyle='rgba(245,197,24,0.5)'; CX.lineWidth=1;
-  rr(CX,-tw/2,-48,tw,14,4); CX.stroke();
-  CX.fillStyle='#f5c518';
-  CX.fillText(G.org,0,-36);
+  // Org name tag
+  CX.font = 'bold 10px Nunito,sans-serif';
+  CX.textAlign = 'center'; CX.textBaseline = 'bottom';
+  const tw = CX.measureText(G.org).width + 10;
+  CX.fillStyle = 'rgba(10,22,45,0.9)';
+  rr(CX, -tw / 2, -48, tw, 14, 4); CX.fill();
+  CX.strokeStyle = 'rgba(245,197,24,0.5)'; CX.lineWidth = 1;
+  rr(CX, -tw / 2, -48, tw, 14, 4); CX.stroke();
+  CX.fillStyle = '#f5c518';
+  CX.fillText(G.org, 0, -36);
 
   CX.restore();
 }
 
-// ---------- PARTICLES ----------
-const PEMOJIS=['✨','⭐','💡','🚀','🎉','⚡'];
-function burst(px,py,color,n){
-  for(let i=0;i<n;i++){
+// ─────────────── PARTICLES ───────────────
+const PEMOJIS = ['✨','⭐','💡','🚀','🎉','⚡'];
+const DEMOJIS = ['💥','🔥','⚡','✨','💫','🌟'];
+
+function burst(px, py, color, n, emojiSet) {
+  const pool = emojiSet || PEMOJIS;
+  for (let i = 0; i < n; i++) {
     G.particles.push({
-      x:px,y:py,vx:(Math.random()-.5)*5,vy:Math.random()*-6-1,
-      life:55+Math.random()*45, maxLife:100, color,
-      emoji:PEMOJIS[Math.floor(Math.random()*PEMOJIS.length)],
-      size:13+Math.random()*11,
+      x: px, y: py, vx: (Math.random() - .5) * 6, vy: Math.random() * -7 - 1.5,
+      life: 55 + Math.random() * 50, maxLife: 105, color,
+      emoji: pool[Math.floor(Math.random() * pool.length)],
+      size: 13 + Math.random() * 12,
     });
   }
 }
 
-function drawParticles(){
-  G.particles.forEach(p=>{
-    CX.save(); CX.globalAlpha=p.life/p.maxLife;
-    CX.font=`${p.size}px serif`;
-    CX.textAlign='center'; CX.textBaseline='middle';
-    CX.fillText(p.emoji,p.x,p.y);
+function drawParticles() {
+  G.particles.forEach(p => {
+    CX.save(); CX.globalAlpha = p.life / p.maxLife;
+    CX.font = `${p.size}px serif`;
+    CX.textAlign = 'center'; CX.textBaseline = 'middle';
+    CX.fillText(p.emoji, p.x, p.y);
     CX.restore();
   });
 }
 
-// ---------- ZONE POPUP ----------
-function drawPopup(){
-  if(!G.popup||G.popT<=0) return;
-  const z=G.popup;
-  const alpha=Math.min(1,G.popT/25);
-  const px=G.px, py=G.py;
-  const w=190, h=70, ox=px-w/2, oy=py-100;
+// ─────────────── ZONE POPUP ───────────────
+function drawPopup() {
+  if (!G.popup || G.popT <= 0) return;
+  const z = G.popup;
+  const alpha = Math.min(1, G.popT / 25);
+  const px = G.px, py = G.py;
+  const w = 220, h = 98, ox = px - w / 2, oy = py - 122;
 
-  CX.save(); CX.globalAlpha=alpha;
-  CX.fillStyle='rgba(10,28,55,0.96)';
-  rr(CX,ox,oy,w,h,10); CX.fill();
-  CX.strokeStyle=z.color; CX.lineWidth=2;
-  rr(CX,ox,oy,w,h,10); CX.stroke();
+  CX.save(); CX.globalAlpha = alpha;
 
-  CX.textAlign='center'; CX.textBaseline='top';
-  CX.font=`bold 12px Orbitron,sans-serif`;
-  CX.fillStyle=z.color;
-  CX.fillText(`${z.icon} ${z.label}`, px, oy+10);
-  CX.font='10px Nunito,sans-serif';
-  CX.fillStyle='#aac4e0';
-  wrapText(px, oy+30, w-14, z.tip);
+  CX.fillStyle = 'rgba(8,20,44,0.97)';
+  rr(CX, ox, oy, w, h, 12); CX.fill();
+  CX.strokeStyle = z.color; CX.lineWidth = 2;
+  rr(CX, ox, oy, w, h, 12); CX.stroke();
+
+  CX.fillStyle = z.color + '55';
+  rr(CX, ox, oy, w, 20, 12); CX.fill();
+  CX.fillStyle = z.color + '22';
+  CX.fillRect(ox, oy + 10, w, 10);
+
+  CX.textAlign = 'center'; CX.textBaseline = 'top';
+
+  CX.font = 'bold 8px Orbitron,sans-serif';
+  CX.fillStyle = '#ef4444';
+  CX.fillText(`${z.issue}  BOTTLENECK CLEARED  ${z.issue}`, px, oy + 5);
+
+  CX.strokeStyle = 'rgba(255,255,255,0.1)'; CX.lineWidth = 1;
+  CX.beginPath(); CX.moveTo(ox + 10, oy + 24); CX.lineTo(ox + w - 10, oy + 24); CX.stroke();
+
+  CX.font = 'bold 11px Orbitron,sans-serif';
+  CX.fillStyle = z.color;
+  CX.fillText(`${z.icon}  ${z.label}  UNLOCKED`, px, oy + 29);
+
+  CX.font = '9.5px Nunito,sans-serif';
+  CX.fillStyle = '#aac4e0';
+  wrapText(px, oy + 48, w - 18, z.tip);
+
+  CX.font = 'bold 7px Nunito,sans-serif';
+  CX.fillStyle = 'rgba(255,255,255,0.35)';
+  CX.fillText('AutomateE Solution', px, oy + h - 10);
 
   CX.restore();
 }
 
-function wrapText(cx,y,maxW,text){
-  const words=text.split(' ');
-  let line='', lines=[];
-  for(let w of words){
-    const t=line+w+' ';
-    if(CX.measureText(t).width>maxW&&line){lines.push(line.trim());line=w+' ';}
-    else line=t;
+function wrapText(cx, y, maxW, text) {
+  const words = text.split(' ');
+  let line = '', lines = [];
+  for (let w of words) {
+    const t = line + w + ' ';
+    if (CX.measureText(t).width > maxW && line) { lines.push(line.trim()); line = w + ' '; }
+    else line = t;
   }
   lines.push(line.trim());
-  lines.slice(0,2).forEach((l,i)=>CX.fillText(l,cx,y+i*14));
+  lines.slice(0, 2).forEach((l, i) => CX.fillText(l, cx, y + i * 14));
 }
 
 // ═══════════════════════════════════════════════
 //  HUD / PANEL UPDATE
 // ═══════════════════════════════════════════════
-function updateHUD(){
-  const dist=Math.abs(G.col-HQ_COL)+Math.abs(G.row-HQ_ROW);
-  const maxD=MCOLS+MROWS;
-  const pct=Math.round(Math.max(0,Math.min(100,100-(dist/maxD)*100)));
+function updateHUD() {
+  const dist = Math.abs(G.col - HQ_COL) + Math.abs(G.row - HQ_ROW);
+  const maxD = MCOLS + MROWS;
+  const pct = Math.round(Math.max(0, Math.min(100, 100 - (dist / maxD) * 100)));
 
-  let stage='📋 Manual Operations';
-  if(pct>18) stage='💻 Going Digital';
-  if(pct>36) stage='🔗 Connecting Systems';
-  if(pct>54) stage='🚀 Workflow Automation';
-  if(pct>72) stage='📊 Intelligent Operations';
-  if(pct>=94) stage='⭐ Full Automation!';
+  let stage = '📋 Manual Operations';
+  if (pct > 18) stage = '💻 Going Digital';
+  if (pct > 36) stage = '🔗 Connecting Systems';
+  if (pct > 54) stage = '🚀 Workflow Automation';
+  if (pct > 72) stage = '📊 Intelligent Operations';
+  if (pct >= 94) stage = '⭐ Full Automation!';
 
-  document.getElementById('hud-stage').textContent=stage;
-  document.getElementById('hud-pct').textContent=pct+'%';
-  document.getElementById('prog').style.width=pct+'%';
-  document.getElementById('p-stage').textContent=stage;
-  document.getElementById('p-stats').innerHTML=`Steps: ${G.steps}<br>Zones: ${G.zonesHit.size}/${ZONES.length}`;
+  document.getElementById('hud-stage').textContent = stage;
+  document.getElementById('hud-pct').textContent   = pct + '%';
+  document.getElementById('prog').style.width       = pct + '%';
+  document.getElementById('p-stage').textContent    = stage;
+  document.getElementById('p-stats').innerHTML = `Steps: ${G.steps}<br>Zones: ${G.zonesHit.size}/${ZONES.length}`;
+  const monEl = document.getElementById('hud-mon-ct');
+  if (monEl) monEl.textContent = `${G.zonesHit.size}/${ZONES.length}`;
 }
 
-function updatePanel(z){
-  document.getElementById('p-tip').className='tip-box good';
-  document.getElementById('p-tip').textContent=z.tip;
-  const all=[...z.tools,...G.allTools.slice(0,2)];
-  document.getElementById('p-tools').innerHTML=
-    [...new Set(all)].slice(0,5).map(t=>`<span class="tool-chip">⚙️ ${t}</span>`).join('');
+function updatePanel(z) {
+  document.getElementById('p-tip').className = 'tip-box good';
+  document.getElementById('p-tip').textContent = z.tip;
+  const all = [...z.tools, ...G.allTools.slice(0, 2)];
+  document.getElementById('p-tools').innerHTML =
+    [...new Set(all)].slice(0, 5).map(t => `<span class="tool-chip">⚙️ ${t}</span>`).join('');
 }
 
 // ═══════════════════════════════════════════════
-//  EMAIL VALIDATION (avoid Frappe InvalidEmailAddressError)
+//  EMAIL VALIDATION
 // ═══════════════════════════════════════════════
 function isValidEmail(str) {
   if (!str || typeof str !== 'string') return false;
   const s = str.trim();
   if (!s) return false;
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(s) && s.length <= 140;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) && s.length <= 140;
 }
 
 // ═══════════════════════════════════════════════
-//  SAVE TO FRAPPE (Customer + Lead)
+//  SAVE TO FRAPPE
 // ═══════════════════════════════════════════════
 async function saveToFrappe() {
   const needsParts = [];
@@ -1193,11 +1428,11 @@ async function saveToFrappe() {
 
   const nameParts = (G.name || 'Player').trim().split(/\s+/);
   const firstName = nameParts[0] || 'Game';
-  const lastName = nameParts.slice(1).join(' ') || 'Player';
-  const leadName = (G.name || firstName + ' ' + lastName).trim();
+  const lastName  = nameParts.slice(1).join(' ') || 'Player';
+  const leadName  = (G.name || firstName + ' ' + lastName).trim();
   const companyName = (G.org || '').trim() || 'Game Player';
-  const email = (G.email || '').trim();
-  const phone = (G.phone || '').trim();
+  const email     = (G.email || '').trim();
+  const phone     = (G.phone || '').trim();
   const emailValid = email && isValidEmail(email);
 
   const leadData = {
@@ -1236,70 +1471,64 @@ async function saveToFrappe() {
 // ═══════════════════════════════════════════════
 //  WIN
 // ═══════════════════════════════════════════════
-function showWin(){
-  for(let i=0;i<8;i++) setTimeout(()=>burst(G.px,G.py,'#f5c518',6),i*90);
+function showWin() {
+  for (let i = 0; i < 8; i++) setTimeout(() => burst(G.px, G.py, '#f5c518', 6), i * 90);
   requestAnimationFrame(loop);
 
-  document.getElementById('win-msg').textContent=
-    `Amazing, ${G.name}! You guided ${G.org} to AutomateE HQ — ${G.zonesHit.size}/${ZONES.length} solution zones unlocked in just ${G.steps} steps. We'll match you with the right AutomateE solutions!`;
+  document.getElementById('win-msg').textContent =
+    `Amazing, ${G.name}! You guided ${G.org} through the maze to AutomateE HQ — ${G.zonesHit.size}/${ZONES.length} bottlenecks cleared in ${G.steps} steps. We'll match you with the right AutomateE solutions!`;
 
-  document.getElementById('win-stats').innerHTML=`
+  document.getElementById('win-stats').innerHTML = `
     <div class="wstat"><div class="wval">${G.steps}</div><div class="wlabel">Steps</div></div>
-    <div class="wstat"><div class="wval">${G.zonesHit.size}/${ZONES.length}</div><div class="wlabel">Zones</div></div>
+    <div class="wstat"><div class="wval">${G.zonesHit.size}/${ZONES.length}</div><div class="wlabel">Cleared</div></div>
     <div class="wstat"><div class="wval">${G.level}</div><div class="wlabel">Start Level</div></div>
     <div class="wstat"><div class="wval">100%</div><div class="wlabel">Complete</div></div>
   `;
 
-  document.getElementById('win-tools').innerHTML=
-    `<div style="font-size:10px;color:#aac4e0;margin-bottom:7px;text-transform:uppercase;letter-spacing:1px;font-weight:800">AutomateE solutions for ${G.org}</div>`+
-    G.allTools.slice(0,4).map(t=>`<span class="tool-chip">🛠️ ${t}</span>`).join('');
+  document.getElementById('win-tools').innerHTML =
+    `<div style="font-size:10px;color:#aac4e0;margin-bottom:7px;text-transform:uppercase;letter-spacing:1px;font-weight:800">AutomateE solutions for ${G.org}</div>` +
+    G.allTools.slice(0, 4).map(t => `<span class="tool-chip">🛠️ ${t}</span>`).join('');
 
-  const winEl = document.getElementById('win');
-  const btnAgain = document.querySelector('.btn-win');
   const saveStatus = document.getElementById('win-save-status');
-  winEl.classList.add('show');
+  document.getElementById('win').classList.add('show');
   confettiPop();
 
   if (saveStatus) saveStatus.textContent = 'Saving your progress…';
-  if (btnAgain) btnAgain.disabled = false;
   saveToFrappe().then(ok => {
     G.saveDone = true;
-    if (saveStatus) saveStatus.textContent = ok ? 'Saved — we\'ll be in touch!' : 'Saved locally.';
-  }).catch((e) => {
+    if (saveStatus) saveStatus.textContent = ok ? "Saved — we'll be in touch!" : 'Saved locally.';
+  }).catch(e => {
     console.error('[AutomateE] saveToFrappe error:', e.message, e);
     if (saveStatus) saveStatus.textContent = 'Save failed — see console (F12) for details.';
   });
 }
 
-function confettiPop(){
-  const card=document.getElementById('win-card');
-  const emjis=['🎉','⭐','🚀','💡','🎊','✨','🏆','💫','⚡'];
-  for(let i=0;i<24;i++){
-    setTimeout(()=>{
-      const p=document.createElement('div');
-      p.className='cpic';
-      p.textContent=emjis[Math.floor(Math.random()*emjis.length)];
-      p.style.cssText=`left:${Math.random()*88}%;bottom:10px;font-size:${14+Math.random()*18}px;animation-duration:${1.2+Math.random()*1.6}s`;
+function confettiPop() {
+  const card = document.getElementById('win-card');
+  const emjis = ['🎉','⭐','🚀','💡','🎊','✨','🏆','💫','⚡'];
+  for (let i = 0; i < 24; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'cpic';
+      p.textContent = emjis[Math.floor(Math.random() * emjis.length)];
+      p.style.cssText = `left:${Math.random()*88}%;bottom:10px;font-size:${14+Math.random()*18}px;animation-duration:${1.2+Math.random()*1.6}s`;
       card.appendChild(p);
-      setTimeout(()=>p.remove(),3000);
-    },i*100);
+      setTimeout(() => p.remove(), 3000);
+    }, i * 100);
   }
 }
 
-function revealSplashForm(){
+function revealSplashForm() {
   const wrap = document.querySelector('.welcome-wrap');
   if (wrap && !wrap.classList.contains('splash-done')) wrap.classList.add('splash-done');
 }
 
-function restartGame(){
-  location.reload();
-}
+function restartGame() { location.reload(); }
 
-function copyResults(){
-  const t=`🤖 AutomateE Automation Journey\n\n👤 ${G.name} — ${G.org}\n📊 ${G.zonesHit.size}/${ZONES.length} zones unlocked | ${G.steps} steps\n⭐ REACHED FULL AUTOMATION HQ!\n\nPowered by AutomateE — Innovative Dynamics Limited`;
-  navigator.clipboard?.writeText(t).then(()=>alert('Copied to clipboard!')).catch(()=>alert(t));
+function copyResults() {
+  const t = `🤖 AutomateE Automation Journey\n\n👤 ${G.name} — ${G.org}\n📊 ${G.zonesHit.size}/${ZONES.length} bottlenecks cleared | ${G.steps} steps\n⭐ REACHED FULL AUTOMATION HQ!\n\nPowered by AutomateE — Innovative Dynamics Limited`;
+  navigator.clipboard?.writeText(t).then(() => alert('Copied to clipboard!')).catch(() => alert(t));
 }
 </script>
 </body>
 </html>
-
